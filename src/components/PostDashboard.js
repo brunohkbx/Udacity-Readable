@@ -2,7 +2,7 @@ import React from 'react';
 import PostList from './PostList';
 import Typography from '@material-ui/core/Typography';
 
-const PostDashboard = props => {
+const PostDashboard = () => {
   return (
     <div style={{ padding: 20 }}>
       <Typography variant="display1" gutterBottom>All Posts</Typography>

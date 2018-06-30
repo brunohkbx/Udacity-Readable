@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { upVotePost, downVotePost } from '../actions';
 import { withStyles } from '@material-ui/core/styles';
@@ -63,6 +64,13 @@ const PostActions = (props) => {
       </Grid>
     </Grid>
   )
+}
+
+PostActions.propTypes = {
+  post_id: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  upVote: PropTypes.func.isRequired,
+  downVote: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => ({

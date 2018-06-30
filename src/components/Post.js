@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PostSubHeader from './PostSubHeader';
 import PostActions from './PostActions';
 import { withStyles } from '@material-ui/core/styles';
@@ -43,6 +44,11 @@ function Post(props) {
       </Card>
     </div>
   );
+}
+
+Post.propTypes = {
+  classes: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Post);

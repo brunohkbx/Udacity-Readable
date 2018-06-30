@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from "moment/moment";
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -28,6 +29,10 @@ const PostSubHeader = ({ post }) => {
     </div>
 
   )
+}
+
+PostSubHeader.propTypes = {
+  post: PropTypes.object.isRequired
 }
 
 export default PostSubHeader;
