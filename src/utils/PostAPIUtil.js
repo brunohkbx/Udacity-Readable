@@ -8,4 +8,15 @@ const headers = {
 
 export const getAll = () =>
   fetch(`${API_URL}/posts`, { headers })
-    .then(res => res.json())
+      .then(res => res.json());
+
+export const votePost = (id, option) =>
+  fetch(`${API_URL}/posts/${id}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ option })
+    })
+    .then(res => res.json());
