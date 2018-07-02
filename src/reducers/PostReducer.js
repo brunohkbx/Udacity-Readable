@@ -1,4 +1,9 @@
-import {RECEIVE_POSTS, UP_VOTE_POST, DOWN_VOTE_POST} from '../constants';
+import {
+  RECEIVE_POSTS,
+  UP_VOTE_POST,
+  DOWN_VOTE_POST,
+  DELETE_POST
+} from '../constants';
 
 export default function posts (state = initialPostsState, action) {
   switch(action.type) {
@@ -13,6 +18,11 @@ export default function posts (state = initialPostsState, action) {
         posts: state.posts
           .filter(post => post.id !== action.post.id)
           .concat(action.post)
+      }
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.post.id)
       }
     default:
       return state

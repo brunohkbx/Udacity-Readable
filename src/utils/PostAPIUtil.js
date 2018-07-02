@@ -18,5 +18,10 @@ export const votePost = (id, option) =>
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ option })
-    })
-    .then(res => res.json());
+    }).then(res => res.json());
+
+export const removePost = id =>
+  fetch(`${API_URL}/posts/${id}`, {
+    method: 'DELETE',
+    headers
+  }).then(res => res.json());

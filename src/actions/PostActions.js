@@ -1,5 +1,11 @@
 import * as PostApiUtil from '../utils/PostAPIUtil';
-import { RECEIVE_POSTS, UP_VOTE_POST, DOWN_VOTE_POST}  from '../constants';
+
+import {
+  RECEIVE_POSTS,
+  UP_VOTE_POST,
+  DOWN_VOTE_POST,
+  DELETE_POST
+} from '../constants';
 
 export const receivePosts = posts => ({
   type: RECEIVE_POSTS,
@@ -29,3 +35,12 @@ export const downVotePost = id => dispatch => (
       post
     }))
 );
+
+export const removePost = id => dispatch => (
+  PostApiUtil
+    .removePost(id)
+    .then(post => dispatch({
+      type: DELETE_POST,
+      post
+    }))
+)
