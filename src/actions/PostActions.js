@@ -12,11 +12,18 @@ export const receivePosts = posts => ({
   posts
 });
 
-export const fetchPosts = () => dispatch => (
-  PostApiUtil
-    .getAll()
-    .then(posts => dispatch(receivePosts(posts)))
-);
+export const fetchPosts = (category = null) => dispatch => {
+  if (category) {
+    return PostApiUtil
+      .getByCategory(category)
+      .then(posts => dispatch(receivePosts(posts)))
+  }
+  else {
+    return PostApiUtil
+      .getAll()
+      .then(posts => dispatch(receivePosts(posts)))
+  }
+};
 
 export const upVotePost = id => dispatch => (
   PostApiUtil

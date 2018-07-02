@@ -10,6 +10,10 @@ export const getAll = () =>
   fetch(`${API_URL}/posts`, { headers })
       .then(res => res.json());
 
+export const getByCategory = category =>
+  fetch(`${API_URL}/${category}/posts`, { headers })
+    .then(res => res.json());
+
 export const votePost = (id, option) =>
   fetch(`${API_URL}/posts/${id}`, {
       method: 'POST',
