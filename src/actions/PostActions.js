@@ -5,7 +5,8 @@ import {
   UP_VOTE_POST,
   DOWN_VOTE_POST,
   DELETE_POST,
-  CREATE_POST
+  CREATE_POST,
+  EDIT_POST
 } from '../constants';
 
 export const receivePosts = posts => ({
@@ -53,11 +54,20 @@ export const removePost = id => dispatch => (
     }))
 );
 
-export const createPost = post => dispatch => (
+export const createPost = data => dispatch => (
   PostApiUtil
-    .createPost(post)
+    .createPost(data)
     .then(newPost => dispatch({
       type: CREATE_POST,
       newPost
+    }))
+);
+
+export const editPost = data => dispatch => (
+  PostApiUtil
+    .editPost(data)
+    .then(post => dispatch({
+      type: EDIT_POST,
+      post
     }))
 );

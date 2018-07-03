@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
-import { TextField, } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui';
 
 const styles = {
   textField: {
@@ -20,7 +20,7 @@ const styles = {
 
 class PostForm extends Component {
   render() {
-    const { classes, categories, handleSubmit } = this.props;
+    const { classes, categories, handleSubmit, editMode } = this.props;
 
     return (
       <form onSubmit={handleSubmit} id='post-form'>
@@ -49,7 +49,7 @@ class PostForm extends Component {
         <Grid container justify='space-between' spacing={32}>
           <Grid item xs>
             <Field
-              required
+              required disabled={editMode}
               component={TextField}
               name="author"
               label="Author"
@@ -58,7 +58,7 @@ class PostForm extends Component {
           </Grid>
           <Grid item xs style={{flexGrow: 0}}>
             <Field
-              required
+              required disabled={editMode}
               component={TextField}
               name="category"
               select
@@ -80,8 +80,13 @@ class PostForm extends Component {
 }
 
 PostForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  editMode: PropTypes.bool
 };
+
+PostForm.defaultProps = {
+  editMode: false
+}
 
 PostForm = reduxForm({
   form: 'post'

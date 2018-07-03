@@ -7,51 +7,52 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PostForm from './PostForm';
-import { createPost } from '../actions';
+import { createPost, editPost } from '../actions';
 
 class PostModal extends Component {
   submit = values => {
-    const { handleClose, createNewPost } = this.props;
+    const { handleClose, editMode, createNewPost, editPost  } = this.props;
 
-    createNewPost(values);
+    editMode ? editPost(values) : createNewPost(values);
     handleClose();
   }
 
   render() {
-    const { opened, handleClose } = this.props;
+    const { header, opened, editMode, post, handleClose } = this.props;
 
     return (
-      <div>
-        <Dialog open={opened} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Create New Post</DialogTitle>
-          <DialogContent>
-            <PostForm onSubmit={this.submit} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">Cancel</Button>
-            <Button type='submit' form='post-form' color="primary">
-              Create
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Dialog open={opened} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">{header}</DialogTitle>
+        <DialogContent>
+          <PostForm initialValues={post} editMode={editMode} onSubmit={this.submit} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">Cancel</Button>
+          <Button type='submit' form='post-form' color="primary">
+            {editMode? 'Edit' : 'Create'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }
 
 PostModal.propTypes = {
+  header: PropTypes.string.isRequired,
   opened: PropTypes.bool,
+  editMode: PropTypes.bool,
+  post: PropTypes.object,
   handleClose: PropTypes.func.isRequired
 };
 
 PostModal.defaultProps = {
-  opened: false
+  opened: false,
+  editMode: false
 }
 
-const mapStateToProps = ({ categories }) => ({ categories: categories.categories })
-
 const mapDispatchToProps = dispatch => ({
-  createNewPost: (post) => dispatch(createPost(post))
+  createNewPost: data => dispatch(createPost(data)),
+  editPost: data => dispatch(editPost(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
+export default connect(null, mapDispatchToProps)(PostModal);

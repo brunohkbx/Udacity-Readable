@@ -63,7 +63,7 @@ class PostDashboard extends Component {
   }
 
   render() {
-    const { classes, posts } = this.props;
+    const { classes, posts, categories, currentCategory } = this.props;
 
     return (
       <div>
@@ -80,6 +80,8 @@ class PostDashboard extends Component {
             <AddIcon/>
           </Button>
           <PostModal
+            header='Create New Post'
+            post={{ category: currentCategory || (categories[0] || {}).name }}
             opened={this.state.postModalOpen}
             handleClose={() => this.setState({ postModalOpen: false })}
           />
@@ -89,7 +91,13 @@ class PostDashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ posts }) => ({ posts: posts.posts })
+const mapStateToProps = ({ posts, categories }) => (
+  {
+    posts: posts.posts,
+    categories: categories.categories,
+    currentCategory: categories.currentCategory
+  }
+)
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: category => dispatch(fetchPosts(category))

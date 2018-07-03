@@ -39,7 +39,7 @@ function Post(props) {
           </Typography>
         </CardContent>
         <CardActions disableActionSpacing>
-          <PostActions post_id={post.id} />
+          <PostActions post={post} />
         </CardActions>
       </Card>
     </div>

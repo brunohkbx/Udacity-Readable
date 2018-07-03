@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import AlertDialog from './AlertDialog';
+import PostModal from './PostModal';
 
 import {
   upVotePost,
@@ -25,6 +26,7 @@ const styles = {
 
 class PostActions extends Component {
   state = {
+    postModalOpen: false,
     removeDialog: false
   }
 
@@ -37,15 +39,15 @@ class PostActions extends Component {
   }
 
   agreeRemoveDialog = () => {
-    const { post_id, remove } = this.props;
+    const { post, remove } = this.props;
 
     this.setState({ removeDialog: false });
 
-    remove(post_id)
+    remove(post.id)
   }
 
   render() {
-    const {post_id, classes, upVote, downVote} = this.props;
+    const {post, classes, upVote, downVote} = this.props;
 
     return (
       <Grid container justify="space-between">
@@ -66,7 +68,11 @@ class PostActions extends Component {
             placement="top"
             classes={{tooltip: classes.tooltip}}
           >
-            <IconButton color="primary" aria-label="Edit">
+            <IconButton
+              onClick={() => this.setState({ postModalOpen: true })}
+              color="primary"
+              aria-label="Edit"
+            >
               <EditIcon/>
             </IconButton>
           </Tooltip>
@@ -82,10 +88,10 @@ class PostActions extends Component {
           </Tooltip>
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVote(post_id) }>
+          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVote(post.id) }>
             <ThumbUpIcon/>
           </IconButton>
-          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVote(post_id) }>
+          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVote(post.id) }>
             <ThumbDownIcon/>
           </IconButton>
         </Grid>
@@ -96,13 +102,20 @@ class PostActions extends Component {
           handleClose={this.closeRemoveDialog}
           handleAgree={this.agreeRemoveDialog}
         />
+        <PostModal
+          header='Edit Post'
+          post={post}
+          editMode={true}
+          opened={this.state.postModalOpen}
+          handleClose={() => this.setState({ postModalOpen: false })}
+        />
       </Grid>
     )
   }
 }
 
 PostActions.propTypes = {
-  post_id: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   upVote: PropTypes.func.isRequired,
   downVote: PropTypes.func.isRequired

@@ -32,7 +32,7 @@ export const removePost = id =>
     headers
   }).then(res => res.json());
 
-export const createPost = post =>
+export const createPost = data =>
   fetch(`${API_URL}/posts`, {
     method: 'POST',
     headers: {
@@ -40,8 +40,18 @@ export const createPost = post =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      ...post,
+      ...data,
       id: uuid(),
       timestamp: Date.now()
     })
+  }).then(res => res.json());
+
+export const editPost = ({ id, title, body }) =>
+  fetch(`${API_URL}/posts/${id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title, body })
   }).then(res => res.json());

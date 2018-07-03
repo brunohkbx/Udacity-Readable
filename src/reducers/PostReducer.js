@@ -3,7 +3,8 @@ import {
   UP_VOTE_POST,
   DOWN_VOTE_POST,
   DELETE_POST,
-  CREATE_POST
+  CREATE_POST,
+  EDIT_POST
 } from '../constants';
 
 export default function posts (state = initialPostsState, action) {
@@ -32,6 +33,13 @@ export default function posts (state = initialPostsState, action) {
         ...state,
         posts: state.posts.concat(newPost)
       }
+    case EDIT_POST:
+     return {
+       ...state,
+       posts: state.posts
+         .filter(post => post.id !== action.post.id)
+         .concat(action.post)
+     }
     default:
       return state
   }
