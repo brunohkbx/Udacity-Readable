@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import PostList from './PostList';
+import PostModal from './PostModal';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -11,18 +12,25 @@ import {
   fetchPosts
 } from '../actions';
 
-const styles = theme => ({
+const styles = {
   header: {
     textTransform: 'capitalize',
   },
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed'
   }
-});
+};
 
 class PostDashboard extends Component {
+  state = {
+    postModalOpen: false
+  }
+
   componentDidMount() {
     const category = this.getCurrentCategory();
 
@@ -62,16 +70,26 @@ class PostDashboard extends Component {
         <div style={{padding: 20}}>
           <Typography variant="display1" gutterBottom className={classes.header}>{this.header()}</Typography>
           <PostList posts={posts} />
-          <Button variant="fab" className={classes.fab} color="primary" aria-label="add">
+          <Button
+            variant="fab"
+            className={classes.fab}
+            color="primary"
+            aria-label="add"
+            onClick={() => this.setState({ postModalOpen: true })}
+          >
             <AddIcon/>
           </Button>
+          <PostModal
+            opened={this.state.postModalOpen}
+            handleClose={() => this.setState({ postModalOpen: false })}
+          />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ posts }) => ({ posts: posts.posts})
+const mapStateToProps = ({ posts }) => ({ posts: posts.posts })
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: category => dispatch(fetchPosts(category))

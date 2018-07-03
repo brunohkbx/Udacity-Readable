@@ -2,7 +2,8 @@ import {
   RECEIVE_POSTS,
   UP_VOTE_POST,
   DOWN_VOTE_POST,
-  DELETE_POST
+  DELETE_POST,
+  CREATE_POST
 } from '../constants';
 
 export default function posts (state = initialPostsState, action) {
@@ -23,6 +24,13 @@ export default function posts (state = initialPostsState, action) {
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.post.id)
+      }
+    case CREATE_POST:
+      const { newPost } = action;
+
+      return {
+        ...state,
+        posts: state.posts.concat(newPost)
       }
     default:
       return state

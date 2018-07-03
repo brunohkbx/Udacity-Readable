@@ -4,7 +4,8 @@ import {
   RECEIVE_POSTS,
   UP_VOTE_POST,
   DOWN_VOTE_POST,
-  DELETE_POST
+  DELETE_POST,
+  CREATE_POST
 } from '../constants';
 
 export const receivePosts = posts => ({
@@ -50,4 +51,13 @@ export const removePost = id => dispatch => (
       type: DELETE_POST,
       post
     }))
-)
+);
+
+export const createPost = post => dispatch => (
+  PostApiUtil
+    .createPost(post)
+    .then(newPost => dispatch({
+      type: CREATE_POST,
+      newPost
+    }))
+);

@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 const API_URL = process.env.REACT_APP_API_URL;
 const API_TOKEN = process.env.REACT_APP_API_AUTHORIZATION_TOKEN;
 
@@ -28,4 +30,18 @@ export const removePost = id =>
   fetch(`${API_URL}/posts/${id}`, {
     method: 'DELETE',
     headers
+  }).then(res => res.json());
+
+export const createPost = post =>
+  fetch(`${API_URL}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ...post,
+      id: uuid(),
+      timestamp: Date.now()
+    })
   }).then(res => res.json());
