@@ -5,12 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
-const PostSubHeader = ({ post }) => {
-  const {
-    timestamp,
-    voteScore,
-    commentCount
-  } = post;
+const PostSubHeader = ({ post: { timestamp, voteScore, commentCount } }) => {
   return (
     <div>
       <span>{ moment(timestamp).format("MMMM DD, YYYY") }</span>
@@ -27,8 +22,7 @@ const PostSubHeader = ({ post }) => {
         {commentCount} comments
       </span>
     </div>
-
-  )
+  );
 }
 
 PostSubHeader.propTypes = {
