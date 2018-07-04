@@ -1,4 +1,4 @@
-import * as CategoryAPIUtil from '../utils/CategoryAPIUtil';
+import * as CategoryApiUtil from '../utils/CategoryApiUtil';
 
 import {
   RECEIVE_CATEGORIES, SELECT_CATEGORY
@@ -10,7 +10,7 @@ export const receiveCategories = categories => ({
 });
 
 export const fetchCategories = () => dispatch => (
-  CategoryAPIUtil
+  CategoryApiUtil
     .getAll()
     .then(data => data.categories)
     .then(categories => dispatch(receiveCategories(categories)))

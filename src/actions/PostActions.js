@@ -1,4 +1,4 @@
-import * as PostApiUtil from '../utils/PostAPIUtil';
+import * as PostApiUtil from '../utils/PostApiUtil';
 
 import {
   RECEIVE_POSTS,
