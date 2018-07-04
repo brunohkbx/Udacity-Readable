@@ -30,30 +30,30 @@ class PostActions extends Component {
     removeDialog: false
   }
 
-  openRemoveDialog = () => {
-    this.setState({ removeDialog: true });
-  }
-
-  closeRemoveDialog = () => {
-    this.setState({ removeDialog: false });
-  }
+  toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
-    const { post, remove } = this.props;
+    const { post: { id }, removePost } = this.props;
 
-    this.setState({ removeDialog: false });
+    this.toggleRemoveDialog(false);
 
-    remove(post.id)
+    removePost(id)
   }
 
   render() {
-    const {post, classes, upVote, downVote, canOpen} = this.props;
+    const {
+      classes,
+      post,
+      upVotePost,
+      downVotePost,
+      openDetails
+    } = this.props;
 
     return (
       <Grid container justify="space-between">
         <Grid item>
           {
-            canOpen && (
+            openDetails && (
               <Tooltip
                 id="tooltip-top-start"
                 title="Open Post"
@@ -86,16 +86,16 @@ class PostActions extends Component {
             placement="top"
             classes={{tooltip: classes.tooltip}}
           >
-            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.openRemoveDialog() }>
+            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
               <DeleteIcon/>
             </IconButton>
           </Tooltip>
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVote(post.id) }>
+          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVotePost(post.id) }>
             <ThumbUpIcon/>
           </IconButton>
-          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVote(post.id) }>
+          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVotePost(post.id) }>
             <ThumbDownIcon/>
           </IconButton>
         </Grid>
@@ -103,7 +103,7 @@ class PostActions extends Component {
           header={"Are you sure to delete this post?"}
           body={"This will be removed from your timeline. You can edit this post if you want to change something."}
           opened={this.state.removeDialog}
-          handleClose={this.closeRemoveDialog}
+          handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
         />
         <PostModal
@@ -120,20 +120,17 @@ class PostActions extends Component {
 
 PostActions.propTypes = {
   post: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-  upVote: PropTypes.func.isRequired,
-  downVote: PropTypes.func.isRequired,
-  canOpen: PropTypes.bool
+  openDetails: PropTypes.bool
 }
 
 PostActions.defaultProps = {
-  canOpen: true
+  openDetails: true
 }
 
 const mapDispatchToProps = dispatch => ({
-  upVote: post_id => dispatch(upVotePost(post_id)),
-  downVote: post_id => dispatch(downVotePost(post_id)),
-  remove: post_id => dispatch(removePost(post_id))
+  removePost: id => dispatch(removePost(id)),
+  upVotePost: id => dispatch(upVotePost(id)),
+  downVotePost: id => dispatch(downVotePost(id))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(PostActions));

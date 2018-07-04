@@ -16,7 +16,7 @@ const styles = {
 };
 
 function Post(props) {
-  const { classes, post, fullDetails, canOpen } = props;
+  const { classes, post, fullDetails, openDetails } = props;
 
   return (
     <div>
@@ -36,7 +36,7 @@ function Post(props) {
           </Typography>
         </CardContent>
         <CardActions disableActionSpacing>
-          <PostActions post={post} canOpen={canOpen} />
+          <PostActions post={post} openDetails={openDetails} />
         </CardActions>
       </Card>
     </div>
@@ -47,12 +47,12 @@ Post.propTypes = {
   classes: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   fullDetails: PropTypes.bool,
-  canOpen: PropTypes.bool
+  openDetails: PropTypes.bool
 }
 
 Post.defaultProps = {
   fullDetails: false,
-  canOpen: true
+  openDetails: true
 }
 
 export default withStyles(styles)(Post);

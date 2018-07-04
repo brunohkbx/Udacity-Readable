@@ -20,7 +20,7 @@ class PostDetail extends Component {
 
     return (
       <div style={{padding: 20}}>
-        { post && (<Post post={post} fullDetails={true} canOpen={false} />)}
+        { post && (<Post post={post} fullDetails={true} openDetails={false} />)}
         <CommentList comments={comments} />
       </div>
     );
