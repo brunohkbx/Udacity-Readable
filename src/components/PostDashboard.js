@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PostList from './PostList';
 import PostFormDialog from './PostFormDialog';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Fab from './Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import {
@@ -15,14 +15,6 @@ import {
 const styles = {
   header: {
     textTransform: 'capitalize',
-  },
-  fab: {
-    margin: 0,
-    top: 'auto',
-    right: 20,
-    bottom: 20,
-    left: 'auto',
-    position: 'fixed'
   }
 };
 
@@ -72,15 +64,13 @@ class PostDashboard extends Component {
         <div style={{padding: 20}}>
           <Typography variant="display1" gutterBottom className={classes.header}>{this.header()}</Typography>
           <PostList posts={posts} />
-          <Button
-            variant="fab"
-            className={classes.fab}
+          <Fab
             color="primary"
-            aria-label="add"
-            onClick={() => this.toggleFormDialog(true) }
+            ariaLabel="create-post"
+            handleClick={() => this.toggleFormDialog(true) }
           >
             <AddIcon/>
-          </Button>
+          </Fab>
           <PostFormDialog
             header='Create New Post'
             post={{ category: currentCategory || (categories[0] || {}).name }}
