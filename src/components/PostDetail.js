@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { fetchPost, fetchPostComments } from '../actions';
 import Post from './Post';
 import CommentList from './CommentList';
+import Fab from './Fab';
+import CommentIcon from '@material-ui/icons/Comment';
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -23,6 +25,12 @@ class PostDetail extends Component {
       <div style={{padding: 20}}>
         { post && (<Post post={post} fullDetails={true} openDetails={false} />)}
         <CommentList comments={comments} />
+        <Fab
+          color='primary'
+          ariaLabel='create-comment'
+        >
+          <CommentIcon/>
+        </Fab>
       </div>
     );
   }
