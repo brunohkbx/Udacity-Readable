@@ -1,31 +1,32 @@
 import * as PostApiUtil from '../utils/PostApiUtil';
 
 import {
-  RECEIVE_POSTS,
   UP_VOTE_POST,
   DOWN_VOTE_POST,
   DELETE_POST,
   CREATE_POST,
   EDIT_POST,
   FETCH_POST,
-  FETCH_POST_COMMENTS
+  FETCH_POSTS,
+  FETCH_COMMENTS
 } from '../constants';
-
-export const receivePosts = posts => ({
-  type: RECEIVE_POSTS,
-  posts
-});
 
 export const fetchPosts = (category = null) => dispatch => {
   if (category) {
     return PostApiUtil
       .getByCategory(category)
-      .then(posts => dispatch(receivePosts(posts)))
+      .then(posts => dispatch({
+        type: FETCH_POSTS,
+        posts
+      }));
   }
   else {
     return PostApiUtil
       .getAll()
-      .then(posts => dispatch(receivePosts(posts)))
+      .then(posts => dispatch({
+        type: FETCH_POSTS,
+        posts
+      }));
   }
 };
 
@@ -87,7 +88,7 @@ export const fetchPostComments = id => dispatch => (
   PostApiUtil
     .getPostComments(id)
     .then(comments => dispatch({
-      type: FETCH_POST_COMMENTS,
+      type: FETCH_COMMENTS,
       comments
     }))
 );

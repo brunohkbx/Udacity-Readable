@@ -1,15 +1,24 @@
 import {
-  RECEIVE_POSTS,
+  FETCH_POST,
+  FETCH_POSTS,
   UP_VOTE_POST,
   DOWN_VOTE_POST,
   DELETE_POST,
   CREATE_POST,
-  EDIT_POST
+  EDIT_POST,
+  DELETE_COMMENT
 } from '../constants';
 
 export default function posts (state = initialPostsState, action) {
   switch(action.type) {
-    case RECEIVE_POSTS:
+    case FETCH_POST:
+      const { post } = action;
+
+      return {
+        ...state,
+        posts: state.posts.concat(post)
+      };
+    case FETCH_POSTS:
       const { posts } = action;
 
       return { posts };
@@ -40,6 +49,15 @@ export default function posts (state = initialPostsState, action) {
          .filter(post => post.id !== action.post.id)
          .concat(action.post)
      }
+    case DELETE_COMMENT:
+      const { comment: { parentId } } = action;
+
+      return {
+        ...state,
+        posts: state.posts.map(post => post.id === parentId ?
+          { ...post, commentCount: post.commentCount - 1 } : post
+        )
+      }
     default:
       return state
   }

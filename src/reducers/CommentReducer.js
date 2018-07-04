@@ -1,27 +1,16 @@
 import {
-  UP_VOTE_POST,
-  DOWN_VOTE_POST,
-  EDIT_POST,
-  FETCH_POST,
-  FETCH_POST_COMMENTS,
+  FETCH_COMMENTS,
   DELETE_COMMENT,
   UP_VOTE_COMMENT,
   DOWN_VOTE_COMMENT
 } from '../constants';
 
-function postDetail(state = initialPostDetailState, action) {
+export default function comment (state = initialCommentState, action) {
   switch (action.type) {
-    case UP_VOTE_POST:
-    case DOWN_VOTE_POST:
-    case EDIT_POST:
-    case FETCH_POST:
-      const { post } = action;
+    case FETCH_COMMENTS:
+      const { comments } = action;
 
-      return { ...state, post };
-    case FETCH_POST_COMMENTS:
-      const { comments } = action
-
-      return { ...state, comments }
+      return { comments }
     case DELETE_COMMENT:
       return { ...state, comments: state.comments.filter(comment => comment.id !== action.comment.id) }
     case UP_VOTE_COMMENT:
@@ -37,9 +26,6 @@ function postDetail(state = initialPostDetailState, action) {
   }
 }
 
-const initialPostDetailState = {
-  post: null,
+const initialCommentState = {
   comments: []
-}
-
-export default postDetail;
+};
