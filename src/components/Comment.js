@@ -33,7 +33,7 @@ const Comment = ({ classes, comment }) => {
           </Typography>
         </CardContent>
         <CardActions disableActionSpacing>
-          <CommentActions />
+          <CommentActions comment={comment} />
         </CardActions>
       </Card>
     </div>

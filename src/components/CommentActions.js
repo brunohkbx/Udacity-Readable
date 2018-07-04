@@ -6,18 +6,16 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from "@material-ui/core/Tooltip";
 import tooltipStyle from '../assets/js/tooltipStyle';
 import IconButton from '@material-ui/core/IconButton';
-import OpenIcon from '@material-ui/icons/OpenInNew';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import AlertDialog from './AlertDialog';
-import PostModal from './PostModal';
 
 import {
-  upVotePost,
-  downVotePost,
-  removePost
+  deleteComment,
+  upVoteComment,
+  downVoteComment
 } from '../actions';
 
 const styles = {
@@ -26,40 +24,37 @@ const styles = {
 
 class CommentActions extends Component {
   state = {
-    postModalOpen: false,
     removeDialog: false
   }
 
-  openRemoveDialog = () => {
-    this.setState({ removeDialog: true });
-  }
-
-  closeRemoveDialog = () => {
-    this.setState({ removeDialog: false });
-  }
+  toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
-    const { post, remove } = this.props;
+    const { comment: { id }, deleteComment } = this.props;
 
-    this.setState({ removeDialog: false });
+    this.toggleRemoveDialog(false);
 
-    remove(post.id)
+    deleteComment(id);
   }
 
   render() {
-    const {post, classes, upVote, downVote, canOpen} = this.props;
+    const {
+      classes,
+      comment,
+      upVoteComment,
+      downVoteComment
+    } = this.props;
 
     return (
       <Grid container justify="space-between">
         <Grid item>
           <Tooltip
             id="tooltip-top-start"
-            title="Edit Post"
+            title="Edit Comment"
             placement="top"
             classes={{tooltip: classes.tooltip}}
           >
             <IconButton
-              onClick={() => this.setState({ postModalOpen: true })}
               color="primary"
               aria-label="Edit"
             >
@@ -68,36 +63,29 @@ class CommentActions extends Component {
           </Tooltip>
           <Tooltip
             id="tooltip-top-start"
-            title="Remove Post"
+            title="Remove Comment"
             placement="top"
             classes={{tooltip: classes.tooltip}}
           >
-            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.openRemoveDialog() }>
+            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
               <DeleteIcon/>
             </IconButton>
           </Tooltip>
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVote(post.id) }>
+          <IconButton color="primary" aria-label="Upvote" onClick={ () => upVoteComment(comment.id) }>
             <ThumbUpIcon/>
           </IconButton>
-          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVote(post.id) }>
+          <IconButton color="secondary" aria-label="Downvote" onClick={ () => downVoteComment(comment.id) }>
             <ThumbDownIcon/>
           </IconButton>
         </Grid>
         <AlertDialog
-          header={"Are you sure to delete this post?"}
-          body={"This will be removed from your timeline. You can edit this post if you want to change something."}
+          header={"Are you sure to delete this comment?"}
+          body={"This will be removed from your post. You can edit this comment if you want to change something."}
           opened={this.state.removeDialog}
-          handleClose={this.closeRemoveDialog}
+          handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
-        />
-        <PostModal
-          header='Edit Post'
-          post={post}
-          editMode={true}
-          opened={this.state.postModalOpen}
-          handleClose={() => this.setState({ postModalOpen: false })}
         />
       </Grid>
     )
@@ -105,16 +93,13 @@ class CommentActions extends Component {
 }
 
 CommentActions.propTypes = {
-  classes: PropTypes.object.isRequired,
-  upVote: PropTypes.func.isRequired,
-  downVote: PropTypes.func.isRequired,
-  canOpen: PropTypes.bool
+  comment: PropTypes.object.isRequired
 }
 
 const mapDispatchToProps = dispatch => ({
-  upVote: post_id => dispatch(upVotePost(post_id)),
-  downVote: post_id => dispatch(downVotePost(post_id)),
-  remove: post_id => dispatch(removePost(post_id))
+  deleteComment: id => dispatch(deleteComment(id)),
+  upVoteComment: id => dispatch(upVoteComment(id)),
+  downVoteComment: id => dispatch(downVoteComment(id))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(CommentActions));
