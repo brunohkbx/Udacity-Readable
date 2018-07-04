@@ -9,13 +9,10 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import CommentSubHeader from './CommentSubHeader';
 import CommentActions from './CommentActions';
-import red from "@material-ui/core/colors/red";
+import avatarStyle from '../assets/js/avatarStyle';
 
 const styles = {
-  avatar: {
-    backgroundColor: red[500],
-    textTransform: 'capitalize',
-  },
+  ...avatarStyle
 };
 
 const Comment = ({ classes, comment }) => {
