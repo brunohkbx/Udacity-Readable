@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PostForm from './PostForm';
 import { createPost, editPost } from '../actions';
 
-class PostModal extends Component {
+class PostFormDialog extends Component {
   submit = values => {
     const { handleClose, editMode, createNewPost, editPost  } = this.props;
 
@@ -37,7 +37,7 @@ class PostModal extends Component {
   }
 }
 
-PostModal.propTypes = {
+PostFormDialog.propTypes = {
   header: PropTypes.string.isRequired,
   opened: PropTypes.bool,
   editMode: PropTypes.bool,
@@ -45,7 +45,7 @@ PostModal.propTypes = {
   handleClose: PropTypes.func.isRequired
 };
 
-PostModal.defaultProps = {
+PostFormDialog.defaultProps = {
   opened: false,
   editMode: false
 }
@@ -55,4 +55,4 @@ const mapDispatchToProps = dispatch => ({
   editPost: data => dispatch(editPost(data))
 });
 
-export default connect(null, mapDispatchToProps)(PostModal);
+export default connect(null, mapDispatchToProps)(PostFormDialog);

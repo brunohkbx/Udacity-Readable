@@ -13,7 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import AlertDialog from './AlertDialog';
-import PostModal from './PostModal';
+import PostFormDialog from './PostFormDialog';
 
 import {
   upVotePost,
@@ -27,10 +27,11 @@ const styles = {
 
 class PostActions extends Component {
   state = {
-    postModalOpen: false,
+    postFormDialogOpen: false,
     removeDialog: false
   }
 
+  toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }) };
   toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
@@ -79,7 +80,7 @@ class PostActions extends Component {
             classes={{tooltip: classes.tooltip}}
           >
             <IconButton
-              onClick={() => this.setState({ postModalOpen: true })}
+              onClick={() => this.toggleFormDialog(true)}
               color="primary"
               aria-label="Edit"
             >
@@ -112,12 +113,12 @@ class PostActions extends Component {
           handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
         />
-        <PostModal
+        <PostFormDialog
           header='Edit Post'
           post={post}
           editMode={true}
-          opened={this.state.postModalOpen}
-          handleClose={() => this.setState({ postModalOpen: false })}
+          opened={this.state.postFormDialogOpen}
+          handleClose={() => this.toggleFormDialog(false)}
         />
       </Grid>
     )

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import PostList from './PostList';
-import PostModal from './PostModal';
+import PostFormDialog from './PostFormDialog';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -28,8 +28,10 @@ const styles = {
 
 class PostDashboard extends Component {
   state = {
-    postModalOpen: false
+    postFormDialogOpen: false
   }
+
+  toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }) };
 
   componentDidMount() {
     const category = this.getCurrentCategory();
@@ -75,15 +77,15 @@ class PostDashboard extends Component {
             className={classes.fab}
             color="primary"
             aria-label="add"
-            onClick={() => this.setState({ postModalOpen: true })}
+            onClick={() => this.toggleFormDialog(true) }
           >
             <AddIcon/>
           </Button>
-          <PostModal
+          <PostFormDialog
             header='Create New Post'
             post={{ category: currentCategory || (categories[0] || {}).name }}
-            opened={this.state.postModalOpen}
-            handleClose={() => this.setState({ postModalOpen: false })}
+            opened={this.state.postFormDialogOpen}
+            handleClose={() => this.toggleFormDialog(false)}
           />
         </div>
       </div>
