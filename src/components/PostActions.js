@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -60,7 +61,12 @@ class PostActions extends Component {
                 placement="top"
                 classes={{tooltip: classes.tooltip}}
               >
-                <IconButton color="primary" aria-label="Open">
+                <IconButton
+                  component={Link}
+                  to={`/${post.category}/${post.id}`}
+                  color="primary"
+                  aria-label="Open"
+                >
                   <OpenIcon/>
                 </IconButton>
               </Tooltip>
