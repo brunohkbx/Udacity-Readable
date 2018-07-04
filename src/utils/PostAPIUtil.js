@@ -55,3 +55,11 @@ export const editPost = ({ id, title, body }) =>
     },
     body: JSON.stringify({ title, body })
   }).then(res => res.json());
+
+export const getPost = id =>
+  fetch(`${API_URL}/posts/${id}`, { headers })
+    .then(res => res.json());
+
+export const getPostComments = id =>
+  fetch(`${API_URL}/posts/${id}/comments`, { headers })
+    .then(res => res.json());

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PostSubHeader from './PostSubHeader';
-import PostActions from './PostActions';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,8 +7,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
-
+import CommentSubHeader from './CommentSubHeader';
+import CommentActions from './CommentActions';
+import red from "@material-ui/core/colors/red";
 
 const styles = {
   avatar: {
@@ -19,44 +18,33 @@ const styles = {
   },
 };
 
-function Post(props) {
-  const { classes, post, fullDetails, canOpen } = props;
-
+const Comment = ({ classes, comment }) => {
   return (
     <div>
       <Card>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {post.author.charAt(0)}
+              {comment.author.charAt(0)}
             </Avatar>
           }
-          title={post.title}
-          subheader={ <PostSubHeader post={post} /> }
+          subheader={ <CommentSubHeader comment={comment} /> }
         />
         <CardContent>
-          <Typography noWrap={!fullDetails} component="p">
-            {post.body}
+          <Typography component="p">
+            {comment.body}
           </Typography>
         </CardContent>
         <CardActions disableActionSpacing>
-          <PostActions post={post} canOpen={canOpen} />
+          <CommentActions />
         </CardActions>
       </Card>
     </div>
   );
 }
 
-Post.propTypes = {
-  classes: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired,
-  fullDetails: PropTypes.bool,
-  canOpen: PropTypes.bool
-}
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired
+};
 
-Post.defaultProps = {
-  fullDetails: false,
-  canOpen: true
-}
-
-export default withStyles(styles)(Post);
+export default withStyles(styles)(Comment);

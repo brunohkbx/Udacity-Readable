@@ -24,7 +24,7 @@ const styles = {
   ...tooltipStyle
 };
 
-class PostActions extends Component {
+class CommentActions extends Component {
   state = {
     postModalOpen: false,
     removeDialog: false
@@ -52,20 +52,6 @@ class PostActions extends Component {
     return (
       <Grid container justify="space-between">
         <Grid item>
-          {
-            canOpen && (
-              <Tooltip
-                id="tooltip-top-start"
-                title="Open Post"
-                placement="top"
-                classes={{tooltip: classes.tooltip}}
-              >
-                <IconButton color="primary" aria-label="Open">
-                  <OpenIcon/>
-                </IconButton>
-              </Tooltip>
-            )
-          }
           <Tooltip
             id="tooltip-top-start"
             title="Edit Post"
@@ -118,16 +104,11 @@ class PostActions extends Component {
   }
 }
 
-PostActions.propTypes = {
-  post: PropTypes.object.isRequired,
+CommentActions.propTypes = {
   classes: PropTypes.object.isRequired,
   upVote: PropTypes.func.isRequired,
   downVote: PropTypes.func.isRequired,
   canOpen: PropTypes.bool
-}
-
-PostActions.defaultProps = {
-  canOpen: true
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -136,4 +117,4 @@ const mapDispatchToProps = dispatch => ({
   remove: post_id => dispatch(removePost(post_id))
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(PostActions));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(CommentActions));

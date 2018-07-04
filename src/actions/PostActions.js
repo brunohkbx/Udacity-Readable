@@ -6,7 +6,9 @@ import {
   DOWN_VOTE_POST,
   DELETE_POST,
   CREATE_POST,
-  EDIT_POST
+  EDIT_POST,
+  FETCH_POST,
+  FETCH_POST_COMMENTS
 } from '../constants';
 
 export const receivePosts = posts => ({
@@ -69,5 +71,23 @@ export const editPost = data => dispatch => (
     .then(post => dispatch({
       type: EDIT_POST,
       post
+    }))
+);
+
+export const fetchPost = id => dispatch => (
+  PostApiUtil
+    .getPost(id)
+    .then(post => dispatch({
+      type: FETCH_POST,
+      post
+    }))
+);
+
+export const fetchPostComments = id => dispatch => (
+  PostApiUtil
+    .getPostComments(id)
+    .then(comments => dispatch({
+      type: FETCH_POST_COMMENTS,
+      comments
     }))
 );
