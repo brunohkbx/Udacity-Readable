@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import PostForm from './PostForm';
+import Dialog from './Dialog';
 import { createPost, editPost } from '../actions';
 
 class PostFormDialog extends Component {
@@ -21,18 +18,21 @@ class PostFormDialog extends Component {
     const { header, opened, editMode, post, handleClose } = this.props;
 
     return (
-      <Dialog open={opened} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">{header}</DialogTitle>
-        <DialogContent>
+      <Dialog
+        opened={opened}
+        header={header}
+        content={
           <PostForm initialValues={post} editMode={editMode} onSubmit={this.submit} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">Cancel</Button>
-          <Button type='submit' form='post-form' color="primary">
-            {editMode? 'Edit' : 'Create'}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        }
+        actions={
+          <div>
+            <Button onClick={handleClose} color="primary">Cancel</Button>
+            <Button type='submit' form='post-form' color="primary">
+              {editMode? 'Edit' : 'Create'}
+            </Button>
+          </div>
+        }
+      />
     );
   }
 }

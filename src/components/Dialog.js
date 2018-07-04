@@ -7,32 +7,29 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const AlertDialog = ({ header, body, opened, handleClose, handleAgree }) => {
+const AlertDialog = ({ opened, header, content, actions }) => {
   return (
     <Dialog
       open={opened}
-      onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{header}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">{body}</DialogContentText>
+        {content}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary"> Disagree </Button>
-        <Button onClick={handleAgree} color="primary" autoFocus> Agree </Button>
+        {actions}
       </DialogActions>
     </Dialog>
   );
 }
 
 AlertDialog.propTypes = {
+  opened: PropTypes.bool,
   header: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  opened: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleAgree: PropTypes.func.isRequired
+  content: PropTypes.node,
+  actions: PropTypes.node.isRequired
 }
 
 export default AlertDialog;

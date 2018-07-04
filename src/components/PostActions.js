@@ -12,7 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import AlertDialog from './AlertDialog';
+import DeleteDialog from './DeleteDialog';
 import PostFormDialog from './PostFormDialog';
 
 import {
@@ -106,10 +106,10 @@ class PostActions extends Component {
             <ThumbDownIcon/>
           </IconButton>
         </Grid>
-        <AlertDialog
-          header={"Are you sure to delete this post?"}
-          body={"This will be removed from your timeline. You can edit this post if you want to change something."}
+        <DeleteDialog
           opened={this.state.removeDialog}
+          header="Are you sure to delete this post?"
+          body="This will be removed from your timeline. You can edit this post if you want to change something."
           handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
         />

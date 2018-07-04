@@ -10,7 +10,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import AlertDialog from './AlertDialog';
+import DeleteDialog from './DeleteDialog';
 
 import {
   deleteComment,
@@ -80,10 +80,10 @@ class CommentActions extends Component {
             <ThumbDownIcon/>
           </IconButton>
         </Grid>
-        <AlertDialog
+        <DeleteDialog
+          opened={this.state.removeDialog}
           header={"Are you sure to delete this comment?"}
           body={"This will be removed from your post. You can edit this comment if you want to change something."}
-          opened={this.state.removeDialog}
           handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
         />
