@@ -1,13 +1,14 @@
 import {
-  RECEIVE_CATEGORIES, SELECT_CATEGORY
+  FETCH_CATEGORIES,
+  SELECT_CATEGORY
 } from '../constants';
 
 export default function category (state = initialCategoriesState, action) {
   switch(action.type) {
-    case RECEIVE_CATEGORIES:
+    case FETCH_CATEGORIES:
       const { categories } = action;
 
-      return { categories };
+      return { ...state, categories };
     case SELECT_CATEGORY:
       const { category } = action;
 

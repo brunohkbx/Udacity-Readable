@@ -1,19 +1,18 @@
 import * as CategoryApiUtil from '../utils/CategoryApiUtil';
 
 import {
-  RECEIVE_CATEGORIES, SELECT_CATEGORY
+  FETCH_CATEGORIES,
+  SELECT_CATEGORY
 } from '../constants';
-
-export const receiveCategories = categories => ({
-  type: RECEIVE_CATEGORIES,
-  categories
-});
 
 export const fetchCategories = () => dispatch => (
   CategoryApiUtil
     .getAll()
     .then(data => data.categories)
-    .then(categories => dispatch(receiveCategories(categories)))
+    .then(categories => dispatch({
+      type: FETCH_CATEGORIES,
+      categories
+    }))
 );
 
 export const selectCategory = category => ({
