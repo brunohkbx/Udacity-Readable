@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import DeleteDialog from './DeleteDialog';
+import CommentFormDialog from './CommentFormDialog';
 
 import {
   deleteComment,
@@ -24,9 +25,11 @@ const styles = {
 
 class CommentActions extends Component {
   state = {
+    commentFormDialogOpen: false,
     removeDialog: false
   }
 
+  toggleFormDialog = open => { this.setState({ commentFormDialogOpen: open }) };
   toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
@@ -55,6 +58,7 @@ class CommentActions extends Component {
             classes={{tooltip: classes.tooltip}}
           >
             <IconButton
+              onClick={() => this.toggleFormDialog(true)}
               color="primary"
               aria-label="Edit"
             >
@@ -86,6 +90,14 @@ class CommentActions extends Component {
           body={"This will be removed from your post. You can edit this comment if you want to change something."}
           handleClose={() => this.toggleRemoveDialog(false)}
           handleAgree={this.agreeRemoveDialog}
+        />
+        <CommentFormDialog
+          header='Edit Comment'
+          opened={this.state.commentFormDialogOpen}
+          editMode={true}
+          post_id={comment.parentId}
+          comment={comment}
+          handleClose={() => this.toggleFormDialog(false)}
         />
       </Grid>
     )

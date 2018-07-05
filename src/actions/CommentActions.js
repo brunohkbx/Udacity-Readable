@@ -3,7 +3,9 @@ import * as CommentApiUtil from '../utils/CommentApiUtil';
 import {
   DELETE_COMMENT,
   UP_VOTE_COMMENT,
-  DOWN_VOTE_COMMENT
+  DOWN_VOTE_COMMENT,
+  CREATE_COMMENT,
+  EDIT_COMMENT
 } from '../constants';
 
 export const deleteComment = id => dispatch => (
@@ -29,6 +31,24 @@ export const downVoteComment = id => dispatch => (
     .voteComment(id, 'downVote')
     .then(comment => dispatch({
       type: DOWN_VOTE_COMMENT,
+      comment
+    }))
+);
+
+export const createComment = (parentId, data) => dispatch => (
+  CommentApiUtil
+    .createComment(parentId, data)
+    .then(comment => dispatch({
+      type: CREATE_COMMENT,
+      comment
+    }))
+);
+
+export const editComment = data => dispatch => (
+  CommentApiUtil
+    .editComment(data)
+    .then(comment => dispatch({
+      type: EDIT_COMMENT,
       comment
     }))
 );

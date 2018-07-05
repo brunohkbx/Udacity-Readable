@@ -2,7 +2,9 @@ import {
   FETCH_COMMENTS,
   DELETE_COMMENT,
   UP_VOTE_COMMENT,
-  DOWN_VOTE_COMMENT
+  DOWN_VOTE_COMMENT,
+  CREATE_COMMENT,
+  EDIT_COMMENT
 } from '../constants';
 
 export default function comment (state = initialCommentState, action) {
@@ -20,7 +22,21 @@ export default function comment (state = initialCommentState, action) {
         comments: state.comments
           .filter(comment => comment.id !== action.comment.id)
           .concat(action.comment)
-      }
+      };
+    case CREATE_COMMENT:
+      let { comment } = action;
+
+      return {
+        ...state,
+        comments: state.comments.concat(comment)
+      };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        comments: state.comments
+          .filter(comment => comment.id !== action.comment.id)
+          .concat(action.comment)
+      };
     default:
       return state;
   }

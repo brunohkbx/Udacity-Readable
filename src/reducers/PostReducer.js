@@ -6,7 +6,8 @@ import {
   DELETE_POST,
   CREATE_POST,
   EDIT_POST,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  CREATE_COMMENT
 } from '../constants';
 
 export default function posts (state = initialPostsState, action) {
@@ -49,8 +50,8 @@ export default function posts (state = initialPostsState, action) {
          .filter(post => post.id !== action.post.id)
          .concat(action.post)
      }
-    case DELETE_COMMENT:
-      const { comment: { parentId } } = action;
+    case DELETE_COMMENT: {
+      const { comment: { parentId }} = action;
 
       return {
         ...state,
@@ -58,6 +59,17 @@ export default function posts (state = initialPostsState, action) {
           { ...post, commentCount: post.commentCount - 1 } : post
         )
       }
+    }
+    case CREATE_COMMENT: {
+      const { comment: { parentId }} = action;
+
+      return {
+        ...state,
+        posts: state.posts.map(post => post.id === parentId ?
+          { ...post, commentCount: post.commentCount + 1 } : post
+        )
+      }
+    }
     default:
       return state
   }

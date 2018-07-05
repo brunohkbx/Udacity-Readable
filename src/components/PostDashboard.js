@@ -67,7 +67,7 @@ class PostDashboard extends Component {
           <Fab
             color="primary"
             ariaLabel="create-post"
-            handleClick={() => this.toggleFormDialog(true) }
+            handleClick={() => this.toggleFormDialog(true)}
           >
             <AddIcon/>
           </Fab>

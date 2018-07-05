@@ -5,8 +5,15 @@ import Post from './Post';
 import CommentList from './CommentList';
 import Fab from './Fab';
 import CommentIcon from '@material-ui/icons/Comment';
+import CommentFormDialog from './CommentFormDialog';
 
 class PostDetail extends Component {
+  state = {
+    commentFormDialogOpen: false
+  }
+
+  toggleFormDialog = open => { this.setState({ commentFormDialogOpen: open }) };
+
   componentDidMount() {
     const {
       match: { params: { post_id }},
@@ -19,7 +26,11 @@ class PostDetail extends Component {
   }
 
   render() {
-    const { post, comments }  = this.props;
+    const {
+      match: { params: { post_id }},
+      post,
+      comments
+    }  = this.props;
 
     return (
       <div style={{padding: 20}}>
@@ -28,9 +39,16 @@ class PostDetail extends Component {
         <Fab
           color='primary'
           ariaLabel='create-comment'
+          handleClick={() => this.toggleFormDialog(true)}
         >
           <CommentIcon/>
         </Fab>
+        <CommentFormDialog
+          header='Create New Comment'
+          opened={this.state.commentFormDialogOpen}
+          post_id={post_id}
+          handleClose={() => this.toggleFormDialog(false)}
+        />
       </div>
     );
   }
