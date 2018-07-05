@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import {fetchCategories} from '../actions';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-import NavSection from './NavSection';
+import CategoryNavSection from './CategoryNavSection';
 import TuneIcon from '@material-ui/icons/Tune';
 import SearchDialog from './SearchDialog';
 
@@ -40,13 +37,10 @@ class AppHeader extends Component {
   toggleSearchDialog = open => { this.setState({ searchDialogOpened: open }) };
   toggleDrawer = open => { this.setState({ drawer: open }) };
 
-  componentDidMount() { this.props.fetchCategories() }
 
   render() {
     const {
       classes,
-      categories,
-      currentCategory,
       filterable
     } = this.props;
 
@@ -82,12 +76,9 @@ class AppHeader extends Component {
         <Drawer open={this.state.drawer} onClose={ () => this.toggleDrawer(false) }>
           <MenuItem>Udacity - Readable</MenuItem>
           <Divider />
-          <NavSection
-            header='Categories'
-            items={categories}
+          <CategoryNavSection
             opened={this.state.categoryNavOpened}
-            currentActiveItem={currentCategory}
-            handleClick={() => this.toggleCategoryNav(!this.state.openCategoryNav)}
+            handleClick={() => this.toggleCategoryNav(!this.state.categoryNavOpened)}
             closeDrawer={() => this.toggleDrawer(false)}
           />
         </Drawer>
@@ -108,18 +99,4 @@ AppHeader.defaultProps = {
   filterable: true
 }
 
-const mapStateToProps = ({ categories }) => (
-  {
-    categories: categories.categories,
-    currentCategory: categories.currentCategory
-  }
-);
-
-const mapDispatchToProps = dispatch => ({
-  fetchCategories: () => dispatch(fetchCategories())
-});
-
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
-)(AppHeader)
+export default withStyles(styles)(AppHeader)

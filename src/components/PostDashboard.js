@@ -10,7 +10,8 @@ import Fab from './Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import {
-  fetchPosts
+  fetchPosts,
+  selectCategory
 } from '../actions';
 
 const styles = {
@@ -27,21 +28,29 @@ class PostDashboard extends Component {
   toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }) };
 
   componentDidMount() {
-    const category = this.getCurrentCategory();
+    const {
+      selectCategory,
+      fetchPosts,
+      currentCategory
+    } = this.props;
 
-    this.props.fetchPosts(category);
+    const urlCategory = this.getUrlCategory();
+
+    if (currentCategory === null && urlCategory) { selectCategory(urlCategory); }
+    fetchPosts(urlCategory);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const currentCategory = this.getCurrentCategory();
+  componentDidUpdate(prevProps) {
+    const urlCategory = this.getUrlCategory();
+    const { fetchPosts } = this.props;
 
-    if (currentCategory !== nextProps.match.params.category) {
-      this.props.fetchPosts(nextProps.match.params.category);
+    if (prevProps.match.params.category !== urlCategory) {
+      fetchPosts(urlCategory);
     }
   }
 
   header() {
-    const category = this.getCurrentCategory();
+    const category = this.getUrlCategory();
 
     if (category) {
       return `${category} Posts`;
@@ -51,20 +60,22 @@ class PostDashboard extends Component {
     }
   }
 
-  getCurrentCategory() {
-    const { match } = this.props;
+  getUrlCategory() {
+    const { match: { params: { category }}} = this.props;
 
-    return match.params.category;
+    return category;
   }
 
   render() {
-    const { classes, posts, categories, currentCategory } = this.props;
+    const { classes, posts, categories } = this.props;
 
     return (
       <div>
         <AppHeader />
         <div style={{padding: 20}}>
-          <Typography variant="display1" gutterBottom className={classes.header}>{this.header()}</Typography>
+          <Typography variant="display1" gutterBottom className={classes.header}>
+            {this.header()}
+          </Typography>
           <PostList posts={posts} />
           <Fab
             color="primary"
@@ -75,7 +86,7 @@ class PostDashboard extends Component {
           </Fab>
           <PostFormDialog
             header='Create New Post'
-            post={{ category: currentCategory || (categories[0] || {}).name }}
+            post={{ category: this.getUrlCategory() || (categories[0] || {}).name }}
             opened={this.state.postFormDialogOpen}
             handleClose={() => this.toggleFormDialog(false)}
           />
@@ -88,13 +99,13 @@ class PostDashboard extends Component {
 const mapStateToProps = ({ posts, categories }) => (
   {
     posts: posts.posts,
-    categories: categories.categories,
-    currentCategory: categories.currentCategory
+    categories: categories.categories
   }
 )
 
 const mapDispatchToProps = dispatch => ({
-  fetchPosts: category => dispatch(fetchPosts(category))
+  fetchPosts: category => dispatch(fetchPosts(category)),
+  selectCategory: category => dispatch(selectCategory(category))
 });
 
 export default compose(

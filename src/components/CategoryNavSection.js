@@ -38,13 +38,12 @@ const styles = theme => ({
   }
 });
 
-const NavSection = props => {
+const CategoryNavSection = props => {
   const {
     classes,
-    header,
-    items,
     opened,
-    currentActiveItem,
+    categories,
+    currentCategory,
     handleClick,
     closeDrawer,
     selectCategory
@@ -57,7 +56,7 @@ const NavSection = props => {
           onClick={() => handleClick()}
           classes={{root: classes.navButton}}
         >
-          {header}
+          Categories
         </Button>
         <Collapse in={opened} timeout="auto">
           <List>
@@ -73,17 +72,17 @@ const NavSection = props => {
               </Button>
             </ListItem>
 
-            {items.map((item, index) => (
+            {categories.map((category, index) => (
               <ListItem key={index} className={classes.navItem} disableGutters>
                 <Button
                   component={Link}
                   classes={{root: classes.navButton}}
-                  className={classNames(classes.link, currentActiveItem === item.name ? 'active' : null)}
-                  to={`/${item.path}`}
-                  color={currentActiveItem === item.name ? 'primary' : 'default' }
-                  onClick={() => selectCategory(item.name) && closeDrawer()}
+                  className={classNames(classes.link, currentCategory === category.name ? 'active' : null)}
+                  to={`/${category.path}`}
+                  color={currentCategory === category.name ? 'primary' : 'default' }
+                  onClick={() => selectCategory(category.name) && closeDrawer()}
                 >
-                  {item.name}
+                  {category.name}
                 </Button>
               </ListItem>
             ))}
@@ -94,19 +93,22 @@ const NavSection = props => {
   );
 }
 
-NavSection.propTypes = {
-  header: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
+CategoryNavSection.propTypes = {
   opened: PropTypes.bool,
-  currentActiveItem: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
-  closeDrawer: PropTypes.func
+  closeDrawer: PropTypes.func.isRequired
 }
 
-NavSection.defaultProps = {
-  opened: false,
-  currentActiveItem: null
+CategoryNavSection.defaultProps = {
+  opened: false
 }
+
+const mapStateToProps = ({ categories }) => (
+  {
+    categories: categories.categories,
+    currentCategory: categories.currentCategory
+  }
+);
 
 const mapDispatchToProps = dispatch => ({
   selectCategory: category => dispatch(selectCategory(category))
@@ -114,5 +116,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
-)(NavSection);
+  connect(mapStateToProps, mapDispatchToProps)
+)(CategoryNavSection);
