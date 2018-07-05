@@ -1,3 +1,5 @@
+import * as PostUtil from '../utils/PostUtil';
+
 import {
   FETCH_POST,
   FETCH_POSTS,
@@ -7,7 +9,10 @@ import {
   CREATE_POST,
   EDIT_POST,
   DELETE_COMMENT,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  SORT_POSTS_BY_DATE,
+  SORT_POSTS_BY_UP_VOTES,
+  SORT_POSTS_BY_DOWN_VOTES
 } from '../constants';
 
 export default function posts (state = initialPostsState, action) {
@@ -15,21 +20,22 @@ export default function posts (state = initialPostsState, action) {
     case FETCH_POST:
       const { post } = action;
 
-      return {
-        ...state,
-        posts: state.posts.concat(post)
-      };
+      return { ...state, posts: state.posts.concat(post) };
     case FETCH_POSTS:
       const { posts } = action;
 
-      return { posts };
+      return { ...state, posts: PostUtil.sort(posts, state.sortBy) };
     case UP_VOTE_POST:
     case DOWN_VOTE_POST:
+    case EDIT_POST:
       return {
         ...state,
-        posts: state.posts
-          .filter(post => post.id !== action.post.id)
-          .concat(action.post)
+        posts: PostUtil.sort(
+          state.posts
+            .filter(post => post.id !== action.post.id)
+            .concat(action.post),
+          state.sortBy
+        )
       }
     case DELETE_POST:
       return {
@@ -41,15 +47,8 @@ export default function posts (state = initialPostsState, action) {
 
       return {
         ...state,
-        posts: state.posts.concat(newPost)
+        posts: PostUtil.sort(state.posts.concat(newPost), state.sortBy)
       }
-    case EDIT_POST:
-     return {
-       ...state,
-       posts: state.posts
-         .filter(post => post.id !== action.post.id)
-         .concat(action.post)
-     }
     case DELETE_COMMENT: {
       const { comment: { parentId }} = action;
 
@@ -70,11 +69,30 @@ export default function posts (state = initialPostsState, action) {
         )
       }
     }
+    case SORT_POSTS_BY_DATE:
+      return {
+        ...state,
+        posts: PostUtil.sort(state.posts, SORT_POSTS_BY_DATE),
+        sortBy: SORT_POSTS_BY_DATE
+      }
+    case SORT_POSTS_BY_UP_VOTES:
+      return {
+        ...state,
+        posts: PostUtil.sort(state.posts, SORT_POSTS_BY_UP_VOTES),
+        sortBy: SORT_POSTS_BY_UP_VOTES
+      }
+    case SORT_POSTS_BY_DOWN_VOTES:
+      return {
+        ...state,
+        posts: PostUtil.sort(state.posts, SORT_POSTS_BY_DOWN_VOTES),
+        sortBy: SORT_POSTS_BY_DOWN_VOTES
+      }
     default:
       return state
   }
 }
 
 const initialPostsState = {
+  sortBy: SORT_POSTS_BY_DATE,
   posts: []
 }

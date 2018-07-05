@@ -8,7 +8,10 @@ import {
   EDIT_POST,
   FETCH_POST,
   FETCH_POSTS,
-  FETCH_COMMENTS
+  FETCH_COMMENTS,
+  SORT_POSTS_BY_DATE,
+  SORT_POSTS_BY_UP_VOTES,
+  SORT_POSTS_BY_DOWN_VOTES
 } from '../constants';
 
 export const fetchPosts = (category = null) => dispatch => {
@@ -92,3 +95,15 @@ export const fetchPostComments = id => dispatch => (
       comments
     }))
 );
+
+export const sortPostsByDate = () => ({
+  type: SORT_POSTS_BY_DATE
+});
+
+export const sortPostByUpVotes = () => ({
+  type: SORT_POSTS_BY_UP_VOTES
+});
+
+export const sortPostByDownVotes = () => ({
+  type: SORT_POSTS_BY_DOWN_VOTES
+});

@@ -5,3 +5,6 @@ export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const FETCH_POSTS = 'FETCH_POSTS';
+export const SORT_POSTS_BY_DATE = 'SORT_POSTS_BY_DATE';
+export const SORT_POSTS_BY_UP_VOTES = 'SORT_POSTS_BY_UP_VOTES';
+export const SORT_POSTS_BY_DOWN_VOTES = 'SORT_POSTS_BY_DOWN_VOTES';

@@ -12,6 +12,8 @@ import Drawer from '@material-ui/core/Drawer';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import NavSection from './NavSection';
+import TuneIcon from '@material-ui/icons/Tune';
+import SearchDialog from './SearchDialog';
 
 const styles = {
   root: {
@@ -29,12 +31,13 @@ const styles = {
 class AppHeader extends Component {
   state = {
     drawer: false,
-    openCategoryNav: false
+    categoryNavOpened: false,
+    searchDialogOpened: false
   }
 
-  toggleDrawer = open => {
-    this.setState({ drawer: open });
-  };
+  toggleCategoryNav = open => { this.setState({ categoryNavOpened: open }) };
+  toggleSearchDialog = open => { this.setState({ searchDialogOpened: open }) };
+  toggleDrawer = open => { this.setState({ drawer: open }) };
 
   componentDidMount() { this.props.fetchCategories() }
 
@@ -56,6 +59,15 @@ class AppHeader extends Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Readable
             </Typography>
+            <div>
+              <IconButton
+                aria-haspopup="true"
+                onClick={() => this.toggleSearchDialog(true)}
+                color="inherit"
+              >
+                <TuneIcon />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.drawer} onClose={ () => this.toggleDrawer(false) }>
@@ -64,12 +76,16 @@ class AppHeader extends Component {
           <NavSection
             header='Categories'
             items={categories}
-            opened={this.state.openCategoryNav}
+            opened={this.state.categoryNavOpened}
             currentActiveItem={currentCategory}
-            handleClick={() => this.setState(state => ({ openCategoryNav: !state.openCategoryNav }))}
+            handleClick={() => this.toggleCategoryNav(!this.state.openCategoryNav)}
             closeDrawer={() => this.toggleDrawer(false)}
           />
         </Drawer>
+        <SearchDialog
+          opened={this.state.searchDialogOpened}
+          handleClose={() => this.toggleSearchDialog(false)}
+        />
       </div>
     );
   }

@@ -1,3 +1,5 @@
+import * as CommentUtil from '../utils/CommentUtil';
+
 import {
   FETCH_COMMENTS,
   DELETE_COMMENT,
@@ -12,30 +14,26 @@ export default function comment (state = initialCommentState, action) {
     case FETCH_COMMENTS:
       const { comments } = action;
 
-      return { comments }
+      return { comments: CommentUtil.sort(comments) }
     case DELETE_COMMENT:
       return { ...state, comments: state.comments.filter(comment => comment.id !== action.comment.id) }
     case UP_VOTE_COMMENT:
     case DOWN_VOTE_COMMENT:
+    case EDIT_COMMENT:
       return {
         ...state,
-        comments: state.comments
-          .filter(comment => comment.id !== action.comment.id)
-          .concat(action.comment)
+        comments: CommentUtil.sort(
+          state.comments
+            .filter(comment => comment.id !== action.comment.id)
+            .concat(action.comment)
+        )
       };
     case CREATE_COMMENT:
       let { comment } = action;
 
       return {
         ...state,
-        comments: state.comments.concat(comment)
-      };
-    case EDIT_COMMENT:
-      return {
-        ...state,
-        comments: state.comments
-          .filter(comment => comment.id !== action.comment.id)
-          .concat(action.comment)
+        comments: CommentUtil.sort(comments.concat(comment))
       };
     default:
       return state;
