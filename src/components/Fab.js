@@ -35,7 +35,7 @@ Fab.propTypes = {
   handleClick: PropTypes.func
 }
 
-Fab.defaultValues = {
+Fab.defaultProps = {
   color: 'primary'
 }
 
