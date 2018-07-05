@@ -9,7 +9,7 @@ const CommentSubHeader = ({ comment: { timestamp, voteScore } }) => {
     <div>
       <span>{ moment(timestamp).format("MMMM DD, YYYY") }</span>
       <span>
-        <IconButton>
+        <IconButton disabled>
           <ThumbUpIcon />
         </IconButton>
         {voteScore} votes

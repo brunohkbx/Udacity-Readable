@@ -10,13 +10,13 @@ const PostSubHeader = ({ post: { timestamp, voteScore, commentCount } }) => {
     <div>
       <span>{ moment(timestamp).format("MMMM DD, YYYY") }</span>
       <span>
-        <IconButton>
+        <IconButton disabled>
           <ThumbUpIcon />
         </IconButton>
         {voteScore} votes
       </span>
       <span>
-        <IconButton>
+        <IconButton disabled>
           <CommentIcon />
         </IconButton>
         {commentCount} comments
