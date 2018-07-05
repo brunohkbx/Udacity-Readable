@@ -54,7 +54,7 @@ class AppHeader extends Component {
               <MenuIcon/>
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              Title
+              Readable
             </Typography>
           </Toolbar>
         </AppBar>
