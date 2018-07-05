@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {fetchCategories} from '../actions';
@@ -42,7 +43,12 @@ class AppHeader extends Component {
   componentDidMount() { this.props.fetchCategories() }
 
   render() {
-    const { classes, categories, currentCategory } = this.props;
+    const {
+      classes,
+      categories,
+      currentCategory,
+      filterable
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -59,15 +65,18 @@ class AppHeader extends Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Readable
             </Typography>
-            <div>
-              <IconButton
-                aria-haspopup="true"
-                onClick={() => this.toggleSearchDialog(true)}
-                color="inherit"
-              >
-                <TuneIcon />
-              </IconButton>
-            </div>
+            {
+              filterable &&
+              <div>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={() => this.toggleSearchDialog(true)}
+                  color="inherit"
+                >
+                  <TuneIcon/>
+                </IconButton>
+              </div>
+            }
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.drawer} onClose={ () => this.toggleDrawer(false) }>
@@ -89,6 +98,14 @@ class AppHeader extends Component {
       </div>
     );
   }
+}
+
+AppHeader.propTypes = {
+  filterable: PropTypes.bool
+}
+
+AppHeader.defaultProps = {
+  filterable: true
 }
 
 const mapStateToProps = ({ categories }) => (

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
+import AppHeader from './AppHeader';
 import PostList from './PostList';
 import PostFormDialog from './PostFormDialog';
 import Typography from '@material-ui/core/Typography';
@@ -61,6 +62,7 @@ class PostDashboard extends Component {
 
     return (
       <div>
+        <AppHeader />
         <div style={{padding: 20}}>
           <Typography variant="display1" gutterBottom className={classes.header}>{this.header()}</Typography>
           <PostList posts={posts} />

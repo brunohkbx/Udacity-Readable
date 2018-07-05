@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPost, fetchPostComments } from '../actions';
+import AppHeader from './AppHeader';
 import Post from './Post';
 import CommentList from './CommentList';
 import Fab from './Fab';
 import CommentIcon from '@material-ui/icons/Comment';
 import CommentFormDialog from './CommentFormDialog';
+
+import {
+  fetchPost,
+  fetchPostComments
+} from '../actions';
 
 class PostDetail extends Component {
   state = {
@@ -33,22 +38,25 @@ class PostDetail extends Component {
     }  = this.props;
 
     return (
-      <div style={{padding: 20}}>
-        { post && (<Post post={post} fullDetails={true} openDetails={false} />)}
-        <CommentList comments={comments} />
-        <Fab
-          color='primary'
-          ariaLabel='create-comment'
-          handleClick={() => this.toggleFormDialog(true)}
-        >
-          <CommentIcon/>
-        </Fab>
-        <CommentFormDialog
-          header='Create New Comment'
-          opened={this.state.commentFormDialogOpen}
-          post_id={post_id}
-          handleClose={() => this.toggleFormDialog(false)}
-        />
+      <div>
+        <AppHeader filterable={false} />
+        <div style={{padding: 20}}>
+          { post && (<Post post={post} fullDetails={true} openDetails={false} />)}
+          <CommentList comments={comments} />
+          <Fab
+            color='primary'
+            ariaLabel='create-comment'
+            handleClick={() => this.toggleFormDialog(true)}
+          >
+            <CommentIcon/>
+          </Fab>
+          <CommentFormDialog
+            header='Create New Comment'
+            opened={this.state.commentFormDialogOpen}
+            post_id={post_id}
+            handleClose={() => this.toggleFormDialog(false)}
+          />
+        </div>
       </div>
     );
   }
