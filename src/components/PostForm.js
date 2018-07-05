@@ -23,18 +23,16 @@ class PostForm extends Component {
     const { classes, categories, handleSubmit, editMode } = this.props;
 
     return (
-      <form onSubmit={handleSubmit} id='post-form'>
-        <div>
+      <Grid container>
+        <form onSubmit={handleSubmit} id='post-form'>
           <Field
             required
             component={TextField}
             name="title"
             label="Title"
-            margin="normal"
+            margin="dense"
             fullWidth
           />
-        </div>
-        <div>
           <Field
             required
             component={TextField}
@@ -42,39 +40,39 @@ class PostForm extends Component {
             label="Body"
             multiline
             rowsMax="4"
-            margin="normal"
+            margin="dense"
             fullWidth
           />
-        </div>
-        <Grid container justify='space-between' spacing={32}>
-          <Grid item xs>
-            <Field
-              required disabled={editMode}
-              component={TextField}
-              name="author"
-              label="Author"
-              margin="normal"
-            />
+          <Grid container justify='space-between' spacing={32}>
+            <Grid item xs>
+              <Field
+                required disabled={editMode}
+                component={TextField}
+                name="author"
+                label="Author"
+                margin="dense"
+              />
+            </Grid>
+            <Grid item xs style={{flexGrow: 0}}>
+              <Field
+                required disabled={editMode}
+                component={TextField}
+                name="category"
+                select
+                label="Category"
+                className={classes.textField}
+                margin="dense"
+              >
+                {categories.map(option => (
+                  <MenuItem key={option.name} value={option.name} className={classes.selectOption}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Field>
+            </Grid>
           </Grid>
-          <Grid item xs style={{flexGrow: 0}}>
-            <Field
-              required disabled={editMode}
-              component={TextField}
-              name="category"
-              select
-              label="Category"
-              className={classes.textField}
-              margin="normal"
-            >
-              {categories.map(option => (
-                <MenuItem key={option.name} value={option.name} className={classes.selectOption}>
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Field>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Grid>
     );
   }
 }

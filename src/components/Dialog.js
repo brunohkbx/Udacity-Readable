@@ -12,7 +12,7 @@ const AlertDialog = ({ opened, header, content, actions }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{header}</DialogTitle>
+      <DialogTitle id="alert-dialog-title" style={{paddingBottom: 0}}>{header}</DialogTitle>
       <DialogContent>
         {content}
       </DialogContent>
