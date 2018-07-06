@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from "moment/moment";
+import moment from 'moment/moment';
+import pluralize from 'pluralize';
 import IconButton from '@material-ui/core/IconButton';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
@@ -12,7 +13,7 @@ const CommentSubHeader = ({ comment: { timestamp, voteScore } }) => {
         <IconButton disabled>
           <ThumbUpIcon />
         </IconButton>
-        {voteScore} votes
+        { pluralize('vote', voteScore, true) }
       </span>
     </div>
   );
