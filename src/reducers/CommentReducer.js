@@ -29,11 +29,11 @@ export default function comment (state = initialCommentState, action) {
         )
       };
     case CREATE_COMMENT:
-      let { comment } = action;
+      const { comment } = action;
 
       return {
         ...state,
-        comments: CommentUtil.sort(comments.concat(comment))
+        comments: CommentUtil.sort(state.comments.concat(comment))
       };
     default:
       return state;
