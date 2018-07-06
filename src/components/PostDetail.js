@@ -41,7 +41,14 @@ class PostDetail extends Component {
       <div>
         <AppHeader filterable={false} />
         <div style={{padding: 20}}>
-          { post && (<Post post={post} fullDetails={true} openDetails={false} />)}
+          { post && (
+            <Post
+              post={post}
+              fullDetails={true}
+              openDetails={false}
+              redirectAfterDelete={true}
+            />
+          )}
           <CommentList comments={comments} />
           <Fab
             color='primary'

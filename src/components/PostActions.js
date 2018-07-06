@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
+import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -28,18 +29,21 @@ const styles = {
 class PostActions extends Component {
   state = {
     postFormDialogOpen: false,
-    removeDialog: false
+    removeDialog: false,
+    redirect: false
   }
 
   toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }) };
   toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
-    const { post: { id }, removePost } = this.props;
+    const { post: { id }, removePost, redirectAfterDelete } = this.props;
 
     this.toggleRemoveDialog(false);
 
     removePost(id)
+
+    if (redirectAfterDelete) { this.setState({ redirect: true }); }
   }
 
   render() {
@@ -120,6 +124,14 @@ class PostActions extends Component {
           opened={this.state.postFormDialogOpen}
           handleClose={() => this.toggleFormDialog(false)}
         />
+        { this.state.redirect &&
+          <Redirect
+            to={{
+              pathname:'/',
+              state: { message: 'The post has been deleted.' }
+            }}
+          />
+        }
       </Grid>
     )
   }
@@ -127,11 +139,13 @@ class PostActions extends Component {
 
 PostActions.propTypes = {
   post: PropTypes.object.isRequired,
-  openDetails: PropTypes.bool
+  openDetails: PropTypes.bool,
+  redirectAfterDelete: PropTypes.bool
 }
 
 PostActions.defaultProps = {
-  openDetails: true
+  openDetails: true,
+  redirectAfterDelete: false
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -140,4 +154,8 @@ const mapDispatchToProps = dispatch => ({
   downVotePost: id => dispatch(downVotePost(id))
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(PostActions));
+export default compose(
+  withRouter,
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(PostActions);

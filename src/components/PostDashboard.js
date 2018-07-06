@@ -8,6 +8,7 @@ import PostFormDialog from './PostFormDialog';
 import Typography from '@material-ui/core/Typography';
 import Fab from './Fab';
 import AddIcon from '@material-ui/icons/Add';
+import FlashMessage from './FlashMessage';
 
 import {
   fetchPosts,
@@ -22,10 +23,13 @@ const styles = {
 
 class PostDashboard extends Component {
   state = {
-    postFormDialogOpen: false
+    postFormDialogOpen: false,
+    snackBarOpen: false,
+    snackBarMessage: ''
   }
 
-  toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }) };
+  toggleFormDialog = open => { this.setState({ postFormDialogOpen: open }); }
+  toggleSnackBar = open => { this.setState({ snackBarOpen: open }); }
 
   componentDidMount() {
     const {
@@ -42,10 +46,24 @@ class PostDashboard extends Component {
 
   componentDidUpdate(prevProps) {
     const urlCategory = this.getUrlCategory();
-    const { fetchPosts } = this.props;
+
+    const {
+      fetchPosts,
+      location,
+      history
+    } = this.props;
 
     if (prevProps.match.params.category !== urlCategory) {
       fetchPosts(urlCategory);
+    }
+
+    if (location.state && location.state.message) {
+      this.setState({
+        snackBarOpen: true,
+        snackBarMessage: location.state.message
+      })
+
+      history.replace({ state: null });
     }
   }
 
@@ -67,7 +85,11 @@ class PostDashboard extends Component {
   }
 
   render() {
-    const { classes, posts, categories } = this.props;
+    const {
+      classes,
+      posts,
+      categories
+    } = this.props;
 
     return (
       <div>
@@ -91,6 +113,11 @@ class PostDashboard extends Component {
             handleClose={() => this.toggleFormDialog(false)}
           />
         </div>
+        <FlashMessage
+          opened={this.state.snackBarOpen}
+          message={this.state.snackBarMessage}
+          handleClose={() => this.toggleSnackBar(!this.state.snackBarOpen)}
+        />
       </div>
     );
   }

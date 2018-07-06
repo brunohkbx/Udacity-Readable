@@ -15,8 +15,14 @@ const styles = {
   ...avatarStyle
 };
 
-function Post(props) {
-  const { classes, post, fullDetails, openDetails } = props;
+const Post = props => {
+  const {
+    classes,
+    post,
+    fullDetails,
+    openDetails,
+    redirectAfterDelete
+  } = props;
 
   return (
     <div>
@@ -36,7 +42,11 @@ function Post(props) {
           </Typography>
         </CardContent>
         <CardActions disableActionSpacing>
-          <PostActions post={post} openDetails={openDetails} />
+          <PostActions
+            post={post}
+            openDetails={openDetails}
+            redirectAfterDelete={redirectAfterDelete}
+          />
         </CardActions>
       </Card>
     </div>
@@ -47,12 +57,14 @@ Post.propTypes = {
   classes: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   fullDetails: PropTypes.bool,
-  openDetails: PropTypes.bool
+  openDetails: PropTypes.bool,
+  redirectAfterDelete: PropTypes.bool
 }
 
 Post.defaultProps = {
   fullDetails: false,
-  openDetails: true
+  openDetails: true,
+  redirectAfterDelete: false
 }
 
 export default withStyles(styles)(Post);
