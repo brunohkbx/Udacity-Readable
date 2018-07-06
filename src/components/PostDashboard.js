@@ -126,6 +126,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-  withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles)
 )(PostDashboard);

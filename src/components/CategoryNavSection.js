@@ -115,6 +115,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
 )(CategoryNavSection);

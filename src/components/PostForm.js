@@ -93,6 +93,6 @@ PostForm = reduxForm({
 const mapStateToProps = ({ categories }) => ({ categories: categories.categories })
 
 export default compose(
-  withStyles(styles),
-  connect(mapStateToProps, null)
+  connect(mapStateToProps, null),
+  withStyles(styles)
 )(PostForm);

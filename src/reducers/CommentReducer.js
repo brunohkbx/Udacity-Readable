@@ -14,9 +14,13 @@ export default function comment (state = initialCommentState, action) {
     case FETCH_COMMENTS:
       const { comments } = action;
 
-      return { comments: CommentUtil.sort(comments) }
+      return { comments: CommentUtil.sort(comments) };
     case DELETE_COMMENT:
-      return { ...state, comments: state.comments.filter(comment => comment.id !== action.comment.id) }
+      return {
+        ...state,
+        comments: state.comments
+          .filter(comment => comment.id !== action.comment.id)
+      };
     case UP_VOTE_COMMENT:
     case DOWN_VOTE_COMMENT:
     case EDIT_COMMENT:

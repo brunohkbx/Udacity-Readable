@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -25,11 +26,11 @@ const styles = {
 
 class CommentActions extends Component {
   state = {
-    commentFormDialogOpen: false,
+    commentFormDialogOpened: false,
     removeDialog: false
   }
 
-  toggleFormDialog = open => { this.setState({ commentFormDialogOpen: open }) };
+  toggleFormDialog = open => { this.setState({ commentFormDialogOpened: open }) };
   toggleRemoveDialog = open => { this.setState({ removeDialog: open }) };
 
   agreeRemoveDialog = () => {
@@ -93,7 +94,7 @@ class CommentActions extends Component {
         />
         <CommentFormDialog
           header='Edit Comment'
-          opened={this.state.commentFormDialogOpen}
+          opened={this.state.commentFormDialogOpened}
           editMode={true}
           post_id={comment.parentId}
           comment={comment}
@@ -114,4 +115,7 @@ const mapDispatchToProps = dispatch => ({
   downVoteComment: id => dispatch(downVoteComment(id))
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(CommentActions));
+export default compose(
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(CommentActions);

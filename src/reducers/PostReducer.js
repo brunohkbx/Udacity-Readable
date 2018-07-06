@@ -36,12 +36,12 @@ export default function posts (state = initialPostsState, action) {
             .concat(action.post),
           state.sortBy
         )
-      }
+      };
     case DELETE_POST:
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.post.id)
-      }
+      };
     case CREATE_POST:
       const { newPost } = action;
 
@@ -74,21 +74,21 @@ export default function posts (state = initialPostsState, action) {
         ...state,
         posts: PostUtil.sort(state.posts, SORT_POSTS_BY_DATE),
         sortBy: SORT_POSTS_BY_DATE
-      }
+      };
     case SORT_POSTS_BY_UP_VOTES:
       return {
         ...state,
         posts: PostUtil.sort(state.posts, SORT_POSTS_BY_UP_VOTES),
         sortBy: SORT_POSTS_BY_UP_VOTES
-      }
+      };
     case SORT_POSTS_BY_DOWN_VOTES:
       return {
         ...state,
         posts: PostUtil.sort(state.posts, SORT_POSTS_BY_DOWN_VOTES),
         sortBy: SORT_POSTS_BY_DOWN_VOTES
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import PostDashboard from './components/PostDashboard';
-import PostDetail from './components/PostDetail';
-import NotFound from './components/NotFound';
+import PostDashboard from './PostDashboard';
+import PostDetail from './PostDetail';
+import NotFound from './NotFound';
 
 import {
   fetchCategories,
   fetchPosts
-} from './actions';
+} from '../actions/index';
 
 class App extends Component {
   componentDidMount() {
@@ -46,4 +47,7 @@ const mapDispatchToProps = dispatch => ({
   fetchPosts: category => dispatch(fetchPosts(category))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(App);

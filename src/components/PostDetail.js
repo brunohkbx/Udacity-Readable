@@ -15,10 +15,10 @@ import {
 
 class PostDetail extends Component {
   state = {
-    commentFormDialogOpen: false
+    commentFormDialogOpened: false
   }
 
-  toggleFormDialog = open => { this.setState({ commentFormDialogOpen: open }) };
+  toggleFormDialog = open => { this.setState({ commentFormDialogOpened: open }) };
 
   componentDidMount() {
     const {
@@ -60,7 +60,7 @@ class PostDetail extends Component {
           </Fab>
           <CommentFormDialog
             header='Create New Comment'
-            opened={this.state.commentFormDialogOpen}
+            opened={this.state.commentFormDialogOpened}
             post_id={post_id}
             handleClose={() => this.toggleFormDialog(false)}
           />

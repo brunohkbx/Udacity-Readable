@@ -17,26 +17,24 @@ const styles = {
 
 const Comment = ({ classes, comment }) => {
   return (
-    <div>
-      <Card>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {comment.author.charAt(0)}
-            </Avatar>
-          }
-          subheader={ <CommentSubHeader comment={comment} /> }
-        />
-        <CardContent>
-          <Typography component="p">
-            {comment.body}
-          </Typography>
-        </CardContent>
-        <CardActions disableActionSpacing>
-          <CommentActions comment={comment} />
-        </CardActions>
-      </Card>
-    </div>
+    <Card>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="Recipe" className={classes.avatar}>
+            {comment.author.charAt(0)}
+          </Avatar>
+        }
+        subheader={ <CommentSubHeader comment={comment} /> }
+      />
+      <CardContent>
+        <Typography component="p">
+          {comment.body}
+        </Typography>
+      </CardContent>
+      <CardActions disableActionSpacing>
+        <CommentActions comment={comment} />
+      </CardActions>
+    </Card>
   );
 }
 

@@ -18,4 +18,4 @@ export const fetchCategories = () => dispatch => (
 export const selectCategory = category => ({
   type: SELECT_CATEGORY,
   category
-})
+});
