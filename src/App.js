@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import PostDashboard from './components/PostDashboard';
 import PostDetail from './components/PostDetail';
+import NotFound from './components/NotFound';
 import { fetchCategories } from './actions';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path="/" component={PostDashboard}/>
           <Route exact path="/:category" component={PostDashboard}/>
           <Route exact path="/:category/:post_id" component={PostDetail}/>
+          <Route component={NotFound} />
         </Switch>
       </div>
     );

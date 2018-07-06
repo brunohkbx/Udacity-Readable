@@ -6,6 +6,7 @@ import CommentList from './CommentList';
 import Fab from './Fab';
 import CommentIcon from '@material-ui/icons/Comment';
 import CommentFormDialog from './CommentFormDialog';
+import NotFound from './NotFound';
 
 import {
   fetchPost,
@@ -32,12 +33,12 @@ class PostDetail extends Component {
 
   render() {
     const {
-      match: { params: { post_id }},
+      match: { params: { category, post_id }},
       post,
       comments
     }  = this.props;
 
-    return (
+    const postDetail = (
       <div>
         <AppHeader filterable={false} />
         <div style={{padding: 20}}>
@@ -65,12 +66,17 @@ class PostDetail extends Component {
           />
         </div>
       </div>
+    )
+
+
+    return (
+      (!post || post.category !== category) ? <NotFound /> : postDetail
     );
   }
 }
 
 const mapStateToProps = (
-  { posts: { posts }, comments: { comments } },
+  { posts: { posts }, comments: { comments }},
   { match: { params: { post_id }}}) => {
 
   return {
