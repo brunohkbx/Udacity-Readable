@@ -1,12 +1,5 @@
 import uuid from 'uuid';
-
-const API_URL = process.env.REACT_APP_API_URL;
-const API_TOKEN = process.env.REACT_APP_API_AUTHORIZATION_TOKEN;
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': API_TOKEN
-}
+import { API_URL, headers } from './Api';
 
 export const deleteComment = id =>
   fetch(`${API_URL}/comments/${id}`, {
