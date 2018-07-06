@@ -7,7 +7,7 @@ const CommentList = ({ comments }) => {
   return (
     <Grid container spacing={24} style={{marginTop: 10}}>
       {comments.map((comment, index) => (
-        <Grid key={index} xs={6} item>
+        <Grid key={index} xs={12} sm={6} item>
           <Comment comment={comment}/>
         </Grid>
       ))}

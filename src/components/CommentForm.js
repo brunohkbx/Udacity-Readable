@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import withStyles from "@material-ui/core/styles/withStyles";
 import { TextField } from 'redux-form-material-ui';
+import Grid from '@material-ui/core/Grid';
 
-const styles = {
-  textField: {
-    width: 400
-  }
-};
-
-class CommentForm extends Component {
-  render() {
-    const { classes, handleSubmit, editMode } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit} id='comment-form'>
-        <div>
+const CommentForm = ({ handleSubmit, editMode }) => {
+  return (
+    <form onSubmit={handleSubmit} id='comment-form'>
+      <Grid container>
+        <Grid item xs={12}>
           <Field
             required
             component={TextField}
@@ -25,24 +17,22 @@ class CommentForm extends Component {
             multiline
             rowsMax="4"
             margin="dense"
-            className={classes.textField}
             fullWidth
           />
-        </div>
-        <div>
+        </Grid>
+        <Grid item xs={12}>
           <Field
             required disabled={editMode}
             component={TextField}
             name="author"
             label="Author"
             margin="dense"
-            className={classes.textField}
             fullWidth
           />
-        </div>
-      </form>
-    );
-  }
+        </Grid>
+      </Grid>
+    </form>
+  );
 }
 
 CommentForm.propTypes = {
@@ -54,8 +44,4 @@ CommentForm.defaultProps = {
   editMode: false
 }
 
-CommentForm = reduxForm({
-  form: 'commentForm'
-})(CommentForm)
-
-export default withStyles(styles)(CommentForm);
+export default reduxForm({ form: 'commentForm' })(CommentForm);
