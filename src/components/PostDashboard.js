@@ -9,11 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Fab from './Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FlashMessage from './FlashMessage';
-
-import {
-  fetchPosts,
-  selectCategory
-} from '../actions';
+import { selectCategory } from '../actions';
 
 const styles = {
   header: {
@@ -34,28 +30,20 @@ class PostDashboard extends Component {
   componentDidMount() {
     const {
       selectCategory,
-      fetchPosts,
       currentCategory
     } = this.props;
 
     const urlCategory = this.getUrlCategory();
 
     if (currentCategory === null && urlCategory) { selectCategory(urlCategory); }
-    fetchPosts(urlCategory);
   }
 
   componentDidUpdate(prevProps) {
-    const urlCategory = this.getUrlCategory();
-
     const {
-      fetchPosts,
       location,
       history
     } = this.props;
 
-    if (prevProps.match.params.category !== urlCategory) {
-      fetchPosts(urlCategory);
-    }
 
     if (location.state && location.state.message) {
       this.setState({
@@ -123,15 +111,17 @@ class PostDashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, categories }) => (
-  {
-    posts: posts.posts,
-    categories: categories.categories
+const mapStateToProps = (
+  { posts: { posts }, categories: { categories }},
+  { match: { params: { category }}}) => {
+
+  return {
+    posts: category ? posts.filter(post => post.category === category) : posts,
+    categories: categories
   }
-)
+}
 
 const mapDispatchToProps = dispatch => ({
-  fetchPosts: category => dispatch(fetchPosts(category)),
   selectCategory: category => dispatch(selectCategory(category))
 });
 
