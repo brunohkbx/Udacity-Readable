@@ -77,7 +77,7 @@ class Post extends Component {
                   color="primary"
                   onClick={this.handleExpandClick}
                 >
-                  Comments
+                  {`Comments (${comments.length})`}
                 </Button>
               </div>
             }
