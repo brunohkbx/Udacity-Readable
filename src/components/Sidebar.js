@@ -32,7 +32,7 @@ const Sidebar = ({ classes, handleDrawerClose, selectCategory }) => {
         onClick={() => selectCategory(null) && handleDrawerClose()}
       >
         <ListItemIcon>
-          <HomeIcon />
+          <HomeIcon className={classes.homeButton} />
         </ListItemIcon>
         <ListItemText primary='Home' />
       </ListItem >
