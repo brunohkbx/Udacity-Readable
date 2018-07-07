@@ -68,7 +68,6 @@ class PostDetail extends Component {
       </div>
     )
 
-
     return (
       (!post || post.category !== category) ? <NotFound /> : postDetail
     );
