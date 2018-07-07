@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,30 +17,31 @@ const styles = {
 
 const Comment = ({ classes, comment }) => {
   return (
-    <Card>
-      <CardHeader
-        avatar={
-          <Tooltip
-            id="tooltip-top-start"
-            title={comment.author}
-            placement="top"
-          >
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {comment.author.charAt(0)}
-            </Avatar>
-          </Tooltip>
-        }
-        subheader={ <CommentSubHeader comment={comment} /> }
-      />
+    <div>
       <CardContent>
-        <Typography component="p">
+        <CardHeader
+          avatar={
+            <Tooltip
+              id="tooltip-top-start"
+              title={comment.author}
+              placement="top"
+            >
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                {comment.author.charAt(0)}
+              </Avatar>
+            </Tooltip>
+          }
+          subheader={ <CommentSubHeader comment={comment} /> }
+          style={{paddingLeft: 0, paddingTop: 0}}
+        />
+        <Typography>
           {comment.body}
         </Typography>
       </CardContent>
-      <CardActions disableActionSpacing>
+      <CardActions>
         <CommentActions comment={comment} />
       </CardActions>
-    </Card>
+    </div>
   );
 }
 

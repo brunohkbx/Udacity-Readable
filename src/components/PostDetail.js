@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppHeader from './AppHeader';
 import Post from './Post';
-import CommentList from './CommentList';
 import Fab from './Fab';
 import CommentIcon from '@material-ui/icons/Comment';
 import CommentFormDialog from './CommentFormDialog';
@@ -48,9 +47,10 @@ class PostDetail extends Component {
               fullDetails={true}
               openDetails={false}
               redirectAfterDelete={true}
+              showComments={true}
+              comments={comments}
             />
           )}
-          <CommentList comments={comments} />
           <Fab
             color='primary'
             ariaLabel='create-comment'
