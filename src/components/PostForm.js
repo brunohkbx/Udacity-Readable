@@ -9,12 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { TextField } from 'redux-form-material-ui';
 
 const styles = {
-  textField: {
-    width: 200,
+  selectField: {
     textTransform: 'capitalize'
-  },
-  selectOption: {
-    textTransform: 'capitalize',
   }
 };
 
@@ -23,56 +19,61 @@ class PostForm extends Component {
     const { classes, categories, handleSubmit, editMode } = this.props;
 
     return (
-      <Grid container>
-        <form onSubmit={handleSubmit} id='post-form'>
-          <Field
-            required
-            component={TextField}
-            name="title"
-            label="Title"
-            margin="dense"
-            fullWidth
-          />
-          <Field
-            required
-            component={TextField}
-            name="body"
-            label="Body"
-            multiline
-            rowsMax="4"
-            margin="dense"
-            fullWidth
-          />
-          <Grid container justify='space-between' spacing={32}>
-            <Grid item xs>
-              <Field
-                required disabled={editMode}
-                component={TextField}
-                name="author"
-                label="Author"
-                margin="dense"
-              />
-            </Grid>
-            <Grid item xs style={{flexGrow: 0}}>
-              <Field
-                required disabled={editMode}
-                component={TextField}
-                name="category"
-                select
-                label="Category"
-                className={classes.textField}
-                margin="dense"
-              >
-                {categories.map(option => (
-                  <MenuItem key={option.name} value={option.name} className={classes.selectOption}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-              </Field>
-            </Grid>
+      <form onSubmit={handleSubmit} id='post-form'>
+        <Grid container>
+          <Grid item xs={12}>
+            <Field
+              required
+              component={TextField}
+              name="title"
+              label="Title"
+              margin="dense"
+              fullWidth
+            />
           </Grid>
-        </form>
-      </Grid>
+          <Grid item xs={12}>
+            <Field
+              required
+              component={TextField}
+              name="body"
+              label="Body"
+              multiline
+              rowsMax="4"
+              margin="dense"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+        <Grid container justify='space-between' spacing={32}>
+          <Grid item xs={12} sm={6}>
+            <Field
+              required disabled={editMode}
+              component={TextField}
+              name="author"
+              label="Author"
+              margin="dense"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Field
+              required disabled={editMode}
+              component={TextField}
+              name="category"
+              select
+              label="Category"
+              margin="dense"
+              className={classes.selectField}
+              fullWidth
+            >
+              {categories.map(option => (
+                <MenuItem key={option.name} value={option.name} className={classes.selectField}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Field>
+          </Grid>
+        </Grid>
+      </form>
     );
   }
 }
