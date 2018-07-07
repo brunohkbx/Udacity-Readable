@@ -1,27 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
-import pluralize from 'pluralize';
-import IconButton from '@material-ui/core/IconButton';
+import LabeledIcon from './LabeledIcon';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import CommentIcon from '@material-ui/icons/Comment';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
+import FolderIcon from '@material-ui/icons/Folder';
 
-const PostSubHeader = ({ post: { timestamp, voteScore, commentCount } }) => {
+const PostSubHeader = props => {
+  const {
+    post: {
+      timestamp,
+      voteScore,
+      commentCount,
+      category
+    }
+  } = props;
+
   return (
-    <div>
-      <span>{ moment(timestamp).format("MMMM DD, YYYY") }</span>
-      <span>
-        <IconButton disabled>
-          <ThumbUpIcon />
-        </IconButton>
-        { pluralize('vote', voteScore, true) }
-      </span>
-      <span>
-        <IconButton disabled>
-          <CommentIcon />
-        </IconButton>
-        { pluralize('comment', commentCount, true) }
-      </span>
+    <div style={{ display: 'flex' }}>
+      <LabeledIcon header={ moment(timestamp).format("MMMM DD, YYYY") }>
+        <AccessTimeIcon />
+      </LabeledIcon>
+      <LabeledIcon header={ voteScore }>
+        <ThumbsUpDownIcon />
+      </LabeledIcon>
+      <LabeledIcon header={ commentCount }>
+        <CommentIcon />
+      </LabeledIcon>
+      <LabeledIcon header={ category }>
+        <FolderIcon />
+      </LabeledIcon>
     </div>
   );
 }

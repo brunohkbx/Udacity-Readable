@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
-import pluralize from 'pluralize';
-import IconButton from '@material-ui/core/IconButton';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import LabeledIcon from './LabeledIcon';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 
 const CommentSubHeader = ({ comment: { timestamp, voteScore } }) => {
   return (
-    <div>
-      <span>{ moment(timestamp).format("MMMM DD, YYYY") }</span>
-      <span>
-        <IconButton disabled>
-          <ThumbUpIcon />
-        </IconButton>
-        { pluralize('vote', voteScore, true) }
-      </span>
+    <div style={{ display: 'flex' }}>
+      <LabeledIcon header={ moment(timestamp).format("MMMM DD, YYYY, HH:mm") }>
+        <AccessTimeIcon />
+      </LabeledIcon>
+      <LabeledIcon header={ voteScore }>
+        <ThumbsUpDownIcon />
+      </LabeledIcon>
     </div>
   );
 }
