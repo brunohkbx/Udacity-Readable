@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -20,9 +21,15 @@ const Comment = ({ classes, comment }) => {
     <Card>
       <CardHeader
         avatar={
-          <Avatar aria-label="Recipe" className={classes.avatar}>
-            {comment.author.charAt(0)}
-          </Avatar>
+          <Tooltip
+            id="tooltip-top-start"
+            title={comment.author}
+            placement="top"
+          >
+            <Avatar aria-label="Recipe" className={classes.avatar}>
+              {comment.author.charAt(0)}
+            </Avatar>
+          </Tooltip>
         }
         subheader={ <CommentSubHeader comment={comment} /> }
       />

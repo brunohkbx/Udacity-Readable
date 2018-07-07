@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from "@material-ui/core/Tooltip";
-import tooltipStyle from '../assets/js/tooltipStyle';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -19,10 +16,6 @@ import {
   upVoteComment,
   downVoteComment
 } from '../actions';
-
-const styles = {
-  ...tooltipStyle
-};
 
 class CommentActions extends Component {
   state = {
@@ -43,7 +36,6 @@ class CommentActions extends Component {
 
   render() {
     const {
-      classes,
       comment,
       upVoteComment,
       downVoteComment
@@ -52,30 +44,16 @@ class CommentActions extends Component {
     return (
       <Grid container justify="space-between">
         <Grid item>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Edit Comment"
-            placement="top"
-            classes={{tooltip: classes.tooltip}}
+          <IconButton
+            onClick={() => this.toggleFormDialog(true)}
+            color="primary"
+            aria-label="Edit"
           >
-            <IconButton
-              onClick={() => this.toggleFormDialog(true)}
-              color="primary"
-              aria-label="Edit"
-            >
-              <EditIcon/>
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove Comment"
-            placement="top"
-            classes={{tooltip: classes.tooltip}}
-          >
-            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
-              <DeleteIcon/>
-            </IconButton>
-          </Tooltip>
+            <EditIcon/>
+          </IconButton>
+          <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
+            <DeleteIcon/>
+          </IconButton>
         </Grid>
         <Grid item>
           <IconButton color="primary" aria-label="Upvote" onClick={ () => upVoteComment(comment.id) }>
@@ -117,5 +95,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   connect(null, mapDispatchToProps),
-  withStyles(styles)
 )(CommentActions);

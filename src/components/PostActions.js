@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from "@material-ui/core/Tooltip";
-import tooltipStyle from '../assets/js/tooltipStyle';
 import IconButton from '@material-ui/core/IconButton';
 import OpenIcon from '@material-ui/icons/OpenInNew';
 import EditIcon from '@material-ui/icons/Edit';
@@ -21,10 +18,6 @@ import {
   downVotePost,
   removePost
 } from '../actions';
-
-const styles = {
-  ...tooltipStyle
-};
 
 class PostActions extends Component {
   state = {
@@ -48,7 +41,6 @@ class PostActions extends Component {
 
   render() {
     const {
-      classes,
       post,
       upVotePost,
       downVotePost,
@@ -60,47 +52,26 @@ class PostActions extends Component {
         <Grid item>
           {
             openDetails && (
-              <Tooltip
-                id="tooltip-top-start"
-                title="Open Post"
-                placement="top"
-                classes={{tooltip: classes.tooltip}}
+              <IconButton
+                component={Link}
+                to={`/${post.category}/${post.id}`}
+                color="primary"
+                aria-label="Open"
               >
-                <IconButton
-                  component={Link}
-                  to={`/${post.category}/${post.id}`}
-                  color="primary"
-                  aria-label="Open"
-                >
-                  <OpenIcon/>
-                </IconButton>
-              </Tooltip>
+                <OpenIcon/>
+              </IconButton>
             )
           }
-          <Tooltip
-            id="tooltip-top-start"
-            title="Edit Post"
-            placement="top"
-            classes={{tooltip: classes.tooltip}}
+          <IconButton
+            onClick={() => this.toggleFormDialog(true)}
+            color="primary"
+            aria-label="Edit"
           >
-            <IconButton
-              onClick={() => this.toggleFormDialog(true)}
-              color="primary"
-              aria-label="Edit"
-            >
-              <EditIcon/>
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove Post"
-            placement="top"
-            classes={{tooltip: classes.tooltip}}
-          >
-            <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
-              <DeleteIcon/>
-            </IconButton>
-          </Tooltip>
+            <EditIcon/>
+          </IconButton>
+          <IconButton color="secondary" aria-label="Delete" onClick={ () => this.toggleRemoveDialog(true) }>
+            <DeleteIcon/>
+          </IconButton>
         </Grid>
         <Grid item>
           <IconButton color="primary" aria-label="Upvote" onClick={ () => upVotePost(post.id) }>
@@ -156,6 +127,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   withRouter,
-  connect(null, mapDispatchToProps),
-  withStyles(styles)
+  connect(null, mapDispatchToProps)
 )(PostActions);
