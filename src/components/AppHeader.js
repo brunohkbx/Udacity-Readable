@@ -7,11 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
-import CategoryNavSection from './CategoryNavSection';
 import TuneIcon from '@material-ui/icons/Tune';
 import SearchDialog from './SearchDialog';
+import Sidebar from './Sidebar';
 
 const styles = {
   root: {
@@ -23,19 +21,23 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
-  }
+  },
+  drawerPaper: {
+    position: 'relative',
+    height: '100%',
+    width: 240,
+  },
 };
 
 class AppHeader extends Component {
   state = {
-    drawer: false,
+    drawerOpened: false,
     categoryNavOpened: false,
     searchDialogOpened: false
   }
 
-  toggleCategoryNav = open => { this.setState({ categoryNavOpened: open }) };
   toggleSearchDialog = open => { this.setState({ searchDialogOpened: open }) };
-  toggleDrawer = open => { this.setState({ drawer: open }) };
+  toggleDrawer = open => { this.setState({ drawerOpened: open }) };
 
 
   render() {
@@ -73,14 +75,14 @@ class AppHeader extends Component {
             }
           </Toolbar>
         </AppBar>
-        <Drawer open={this.state.drawer} onClose={ () => this.toggleDrawer(false) }>
-          <MenuItem>Udacity - Readable</MenuItem>
-          <Divider />
-          <CategoryNavSection
-            opened={this.state.categoryNavOpened}
-            handleClick={() => this.toggleCategoryNav(!this.state.categoryNavOpened)}
-            closeDrawer={() => this.toggleDrawer(false)}
-          />
+        <Drawer
+          open={this.state.drawerOpened}
+          onClose={ () => this.toggleDrawer(false) }
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <Sidebar handleDrawerClose={() => this.toggleDrawer(false)} />
         </Drawer>
         <SearchDialog
           opened={this.state.searchDialogOpened}

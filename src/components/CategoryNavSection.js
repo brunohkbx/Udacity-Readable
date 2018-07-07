@@ -7,33 +7,18 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Collapse from "@material-ui/core/Collapse";
-import Button from '@material-ui/core/Button';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import FolderIcon from '@material-ui/icons/Folder';
 
-import {
-  selectCategory
-} from '../actions';
 
 const styles = theme => ({
-  nav: {
-    display: 'block',
-  },
-  navButton: {
-    justifyContent: 'flex-start',
-    textTransform: 'none',
-    width: '100%',
-  },
-  navItem: {
-    display: 'flex',
-    paddingTop: 0,
-    paddingBottom: 0
-  },
   link: {
     textTransform: 'capitalize',
     fontWeight: theme.typography.fontWeightRegular,
-    paddingLeft: '40px',
     '&.active': {
-      fontWeight: theme.typography.fontWeightMedium
+      fontWeight: theme.typography.fontWeightMedium,
+      color: theme.palette.primary.main
     }
   }
 });
@@ -41,62 +26,38 @@ const styles = theme => ({
 const CategoryNavSection = props => {
   const {
     classes,
-    opened,
     categories,
     currentCategory,
-    handleClick,
-    closeDrawer,
-    selectCategory
+    handleDrawerClose,
+    handleCategory
   } = props;
 
   return (
     <List>
-      <ListItem className={classes.nav} disableGutters>
-        <Button
-          onClick={() => handleClick()}
-          classes={{root: classes.navButton}}
+      {categories.map((category, index) => (
+        <ListItem
+          button
+          component={Link}
+          to={`/${category.path}`}
+          key={index}
+          onClick={() => handleCategory(category.name) && handleDrawerClose()}
         >
-          Categories
-        </Button>
-        <Collapse in={opened} timeout="auto">
-          <List>
-            <ListItem className={classes.navItem} disableGutters>
-              <Button
-                component={Link}
-                classes={{root: classes.navButton}}
-                className={classes.link}
-                to='/'
-                onClick={() => selectCategory(null) && closeDrawer()}
-              >
-                All
-              </Button>
-            </ListItem>
-
-            {categories.map((category, index) => (
-              <ListItem key={index} className={classes.navItem} disableGutters>
-                <Button
-                  component={Link}
-                  classes={{root: classes.navButton}}
-                  className={classNames(classes.link, currentCategory === category.name ? 'active' : null)}
-                  to={`/${category.path}`}
-                  color={currentCategory === category.name ? 'primary' : 'default' }
-                  onClick={() => selectCategory(category.name) && closeDrawer()}
-                >
-                  {category.name}
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-      </ListItem>
+          <ListItemIcon>
+            <FolderIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={category.name}
+            classes={{primary: classNames(classes.link, currentCategory === category.name ? 'active' : null)}}
+          />
+        </ListItem>
+      ))}
     </List>
   );
 }
 
 CategoryNavSection.propTypes = {
-  opened: PropTypes.bool,
-  handleClick: PropTypes.func.isRequired,
-  closeDrawer: PropTypes.func.isRequired
+  handleDrawerClose: PropTypes.func.isRequired,
+  handleCategory: PropTypes.func.isRequired
 }
 
 CategoryNavSection.defaultProps = {
@@ -110,11 +71,7 @@ const mapStateToProps = ({ categories }) => (
   }
 );
 
-const mapDispatchToProps = dispatch => ({
-  selectCategory: category => dispatch(selectCategory(category))
-});
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, null),
   withStyles(styles),
 )(CategoryNavSection);
